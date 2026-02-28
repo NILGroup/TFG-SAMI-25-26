@@ -2,7 +2,7 @@
 
 import uvicorn
 from fastapi import FastAPI
-from fastapi.concurrency import run_in_threadpool
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from RAG import pregunta_a_RAG, crear_RAG
 
@@ -12,6 +12,13 @@ app = FastAPI(
     version="1.0"
 )
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173/"],  # puerto de Vite por defecto
+    allow_methods=[""],
+    allow_headers=[""],
+)
 
 class Pregunta(BaseModel):
     pregunta: str
