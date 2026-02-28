@@ -96,3 +96,17 @@
 .settings-button:active {
     transform: scale(0.95);
 }
+
+@media (max-width: 600px) {
+    .header-container {
+        padding: 10px 15px;
+    }
+
+    .header-logo-subtitle {
+        display: none;
+    }
+
+    .settings-button span {
+        display: none;
+    }
+}

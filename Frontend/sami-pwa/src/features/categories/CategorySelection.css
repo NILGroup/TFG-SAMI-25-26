@@ -71,3 +71,13 @@
     font-size: 0.95em;
     line-height: 1.4;
 }
+
+@media (max-width: 600px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-page-wrapper {
+        padding: 20px 15px;
+    }
+}

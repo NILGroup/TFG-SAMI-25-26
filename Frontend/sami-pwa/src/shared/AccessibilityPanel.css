@@ -90,3 +90,13 @@
     color: var(--bg-primary);
     border-color: var(--accent);
 }
+
+@media (max-width: 600px) {
+    .accessibility-sidebar {
+        width: 100%;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}

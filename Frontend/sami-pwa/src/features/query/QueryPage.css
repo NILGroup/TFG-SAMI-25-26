@@ -142,3 +142,31 @@
         transform: translateY(0);
     }
 }
+
+
+@media (max-width: 600px) {
+    .interaction-box {
+        padding: 20px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .search-confirm-btn {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .explanation-card {
+        padding: 25px;
+    }
+
+    .response-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .response-header h1 {
+        font-size: 1.3em;
+    }
+}
