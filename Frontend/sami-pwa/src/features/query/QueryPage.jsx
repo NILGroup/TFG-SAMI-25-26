@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAccessibilityStore } from '../../store/useAccessibilityStore';
+import { preguntarAlRAG } from '../../services/api';
 import './QueryPage.css';
 
 export const QueryPage = () => {
@@ -11,14 +12,26 @@ export const QueryPage = () => {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleSearch = (text) => {
+    const handleSearch = async (text) => {
         const query = text || question;
         if (!query.trim()) return;
 
         setQuestion(query);
-        setAnswer(`Placeholder de la respuesta.`);
-        setIsSubmitted(true);
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const respuesta = await preguntarAlRAG(query);
+            setAnswer(respuesta);
+            setIsSubmitted(true);
+        } catch (e) {
+            setError('No se pudo conectar con el asistente. Inténtalo de nuevo.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -35,10 +48,19 @@ export const QueryPage = () => {
                                 className="main-input"
                                 value={question}
                                 onChange={(e) => setQuestion(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder="Escribe aquí..."
+                                disabled={isLoading}
                             />
-                            <button className="search-confirm-btn" onClick={() => handleSearch()}>Consultar</button>
+                            <button
+                                className="search-confirm-btn"
+                                onClick={() => handleSearch()}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Consultando...' : 'Consultar'}
+                            </button>
                         </div>
+                        {error && <p style={{ color: 'red', marginTop: '12px' }}>{error}</p>}
                     </div>
                 </div>
             ) : (
@@ -50,8 +72,8 @@ export const QueryPage = () => {
                         <p>{answer}</p>
                     </div>
                     <footer className="response-actions">
-                        <button className="action-btn" onClick={() => setIsSubmitted(false)}>Nueva consulta</button>
-                        <button className="action-btn">Lectura Facil</button>
+                        <button className="action-btn" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta</button>
+                        <button className="action-btn">Lectura Fácil</button>
                         <button className="action-btn">Reformular respuesta</button>
                         <button className="action-btn" onClick={() => navigate('/')}>Volver al inicio</button>
                     </footer>
