@@ -1,0 +1,50 @@
+:root {
+    --ucm-red: #8D0D19;
+    --bg-primary: #f4f4f4;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent: #8D0D19;
+    --border: #eeeeee;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --btn-bg: #f0f0f0;
+    --size-selector-bg: #f4f4f4;
+}
+
+[data-theme="high-contrast"] {
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent: #ffff00;
+    --border: #ffffff;
+    --shadow: rgba(255, 255, 255, 0.1);
+    --btn-bg: #222222;
+    --size-selector-bg: #222222;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
