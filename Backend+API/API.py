@@ -15,9 +15,9 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173/"],  # puerto de Vite por defecto
-    allow_methods=[""],
-    allow_headers=[""],
+    allow_origins=["http://localhost:5173"],  # puerto de Vite por defecto
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class Pregunta(BaseModel):
