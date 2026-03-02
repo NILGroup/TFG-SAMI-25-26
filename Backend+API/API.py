@@ -1,15 +1,30 @@
 # pip install fastapi uvicorn
 
 import uvicorn
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from RAG import pregunta_a_RAG, crear_RAG
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    crear_RAG()
+    print("RAG inicializado")
+    
+    yield  # La app corre aquí
+    
+    # Shutdown
+    print("Liberando recursos...")
+    
+
 app = FastAPI(
     title="API de SAMI",
     description="Recibe preguntas y devuelve las respuestas proporcionadas por un LLM",
-    version="1.0"
+    version="1.0",
+    lifespan=lifespan
 )
 
 
@@ -26,17 +41,6 @@ class Pregunta(BaseModel):
 
 class Respuesta(BaseModel):
     respuesta: str
-
-
-@app.on_event("startup")
-def startup_event():
-    crear_RAG()
-    print("RAG inicializado")
-
-
-@app.on_event("shutdown")
-def shutdown_event():
-    print("Liberando recursos...")
 
 
 @app.get("/")
