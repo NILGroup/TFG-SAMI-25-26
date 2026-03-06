@@ -7,24 +7,60 @@ import './QueryPage.css';
 
 const FAQS_POR_CATEGORIA = {
     academico: [
-        '¿Cómo accedo al campus virtual?',
-        '¿Cuándo son los exámenes finales?',
-        '¿Cómo solicito una revisión de examen?',
+        {
+            pregunta: '¿Cómo accedo al campus virtual?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cuándo son los exámenes finales en la facultad de Educación?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cómo puedo ponerme en contacto con un profesor de una asignatura?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        }
     ],
     administrativo: [
-        '¿Cómo pido la beca?',
-        '¿Cuándo se abre el plazo de matrícula?',
-        '¿Cómo solicito un certificado de notas?',
+        {
+            pregunta: '¿Qué becas y/o ayudas económicas puedo pedir?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cuándo abre el plazo de matrícula en la Facultad de Educación?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cómo puedo aportar nueva documentación a la universidad?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
     ],
     biblioteca: [
-        '¿Cómo renuevo un préstamo?',
-        '¿Cuántos libros puedo pedir prestados?',
-        '¿Cómo accedo a los recursos digitales?',
+        {
+            pregunta: '¿Cómo renuevo el préstamo de un libro?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cómo reservo una sala en la biblioteca?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Qué horarios tiene la biblioteca de la facultad de Educación?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        }
     ],
     servicios: [
-        '¿Qué instalaciones deportivas hay?',
-        '¿Cómo me apunto a actividades culturales?',
-        '¿Dónde está la oficina de estudiantes?',
+        {
+            pregunta: '¿Cómo accedo al campus virtual?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cómo accedo al campus virtual?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+        {
+            pregunta: '¿Cómo accedo al campus virtual?',
+            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        }
     ]
 
 
@@ -43,11 +79,17 @@ export const QueryPage = () => {
 
     const faqs = FAQS_POR_CATEGORIA[categoryId] || [];
 
-    const handleSearch = async (text) => {
+    const handleSearch = async (text, respuestaDirecta = null) => {
         const query = text || question;
         if (!query.trim()) return;
 
         setQuestion(query);
+
+        if (respuestaDirecta != null) {
+            setAnswer(respuestaDirecta);
+            setIsSubmitted(true);
+            return;
+        }
         setIsLoading(true);
         setError(null);
 
@@ -68,19 +110,15 @@ export const QueryPage = () => {
                 <div className="search-panel">
                     <h2 className="category-title">Asistente: {categoryId}</h2>
                     <div className="interaction-box">
-                        {faqs.length > 0 && (
-                            <div className="faqs-container">
-                                {faqs.map((faq) => (
-                                    <button
-                                        key={faq}
-                                        className="faq-button"
-                                        onClick={() => handleSearch(faq)}
-                                    >
-                                        {faq}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
+                        {faqs.map((faq) => (
+                            <button
+                                key={faq.pregunta}
+                                className="faq-button"
+                                onClick={() => handleSearch(faq.pregunta, faq.respuesta)}
+                            >
+                                {faq.pregunta}
+                            </button>
+                        ))}
                         <div className="input-group">
                             <input
                                 className="main-input"
@@ -112,7 +150,7 @@ export const QueryPage = () => {
                     <footer className="response-actions">
                         <button className="action-btn" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta</button>
                         <button className="action-btn">Lectura Fácil</button>
-                        <button className="action-btn">Reformular respuesta</button>
+                        <button className="action-btn">Respuesta más corta</button>
                         <button className="action-btn" onClick={() => navigate('/')}>Volver al inicio</button>
                     </footer>
                 </div>
