@@ -22,10 +22,11 @@ def crear_DB():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=300)
     docs = text_splitter.split_documents(data_web)
 
+    DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
     embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
     Chroma.from_documents(
         documents=docs,
         embedding=embed_model,
-        persist_directory="chroma_db",
+        persist_directory=DB_PATH,
         collection_name="TFG_prueba"
     )

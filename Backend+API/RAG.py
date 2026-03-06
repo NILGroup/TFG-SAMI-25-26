@@ -19,11 +19,13 @@ def crear_RAG():
     #Se crea el modelo de embedings
     embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
 
-    if not os.path.exists("chroma_db"):
+    DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
+                           
+    if not os.path.exists(DB_PATH):
         crear_DB()
 
     vector_store = Chroma(embedding_function=embed_model,
-                          persist_directory="chroma_db",
+                          persist_directory=DB_PATH,
                           collection_name="TFG_prueba")
     # K es el número de chunks que se añaden al contexto
     retriever = vector_store.as_retriever(search_kwargs={'k': 2})
