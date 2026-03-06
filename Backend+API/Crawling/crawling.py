@@ -76,7 +76,7 @@ def obtener_todas_las_urls(url_semilla):
 # --- EJECUCIÓN ---
 urls_detectadas = obtener_todas_las_urls(BASE_URL)
 
-# Guardar el objeto JSON en el archivo TXT
+# Guardar el resultado en un archivo JSON
 with open(ARCHIVO_SALIDA, 'w', encoding='utf-8') as f:
     json.dump(urls_detectadas, f, ensure_ascii=False, indent=4)
 
