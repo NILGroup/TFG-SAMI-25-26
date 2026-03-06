@@ -151,6 +151,8 @@ export const QueryPage = () => {
                         <button className="action-btn" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta</button>
                         <button className="action-btn">Lectura Fácil</button>
                         <button className="action-btn">Respuesta más corta</button>
+                        <button className="action-btn">Respuesta por pasos</button>
+                        <button className="action-btn">Reformular respuesta</button>
                         <button className="action-btn" onClick={() => navigate('/')}>Volver al inicio</button>
                     </footer>
                 </div>
