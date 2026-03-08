@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Datos
+crawling_result.json
+crawling_pdfs.json
+resultados_scrapping.csv
