@@ -1,15 +1,15 @@
-#pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4
+#pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4 sentence-transformers
 
 import os
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
+from sentence_transformers import CrossEncoder
 from crearBD import crear_DB
 
 RAG = None
+reranker = None
 
 def crear_RAG():
     global RAG
@@ -28,7 +28,27 @@ def crear_RAG():
                           persist_directory=DB_PATH,
                           collection_name="TFG_prueba")
     # K es el número de chunks que se añaden al contexto
-    retriever = vector_store.as_retriever(search_kwargs={'k': 2})
+    retriever = vector_store.as_retriever(search_kwargs={'k': 10})
+
+    reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+    def retrieve_and_rerank(pregunta: str):
+        # 1. Recupera los k candidatos iniciales
+        docs = retriever.invoke(pregunta)
+
+        # 2. Puntúa cada par (pregunta, chunk)
+        pares = [[pregunta, doc.page_content] for doc in docs]
+        puntuaciones = reranker.predict(pares)
+
+        # 3. Ordena por puntuación descendente y quédate con los top 3
+        docs_ordenados = sorted(
+            zip(puntuaciones, docs),
+            key=lambda x: x[0],
+            reverse=True
+        )
+        top_docs = [doc for _, doc in docs_ordenados[:3]]
+
+        return top_docs
 
     prompt_template = ChatPromptTemplate.from_template("""Responde a la pregunta usando el contexto dado.
 
@@ -42,7 +62,7 @@ def crear_RAG():
     RAG = (
         {
             "question": lambda x: str(x),
-            "context": retriever.invoke
+            "context": retrieve_and_rerank
         }
         | prompt_template
         | model
