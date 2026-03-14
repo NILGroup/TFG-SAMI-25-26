@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useHistorialStore } from '../../store/useChatStore';
 import { useAccessibilityStore } from '../../store/useAccessibilityStore';
 import { preguntarAlRAG } from '../../services/api';
 import './QueryPage.css';
@@ -77,6 +78,9 @@ export const QueryPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const { addPregunta, getPreguntas } = useHistorialStore();
+    const preguntasRecientes = getPreguntas(categoryId);
+
     const faqs = FAQS_POR_CATEGORIA[categoryId] || [];
 
     const handleSearch = async (text, respuestaDirecta = null) => {
@@ -90,6 +94,8 @@ export const QueryPage = () => {
             setIsSubmitted(true);
             return;
         }
+
+        addPregunta(categoryId, query);
         setIsLoading(true);
         setError(null);
 
@@ -110,15 +116,37 @@ export const QueryPage = () => {
                 <div className="search-panel">
                     <h2 className="category-title">Asistente: {categoryId}</h2>
                     <div className="interaction-box">
-                        {faqs.map((faq) => (
-                            <button
-                                key={faq.pregunta}
-                                className="faq-button"
-                                onClick={() => handleSearch(faq.pregunta, faq.respuesta)}
-                            >
-                                {faq.pregunta}
-                            </button>
-                        ))}
+
+                        {preguntasRecientes.length > 0 && (
+                            <div>
+                                <p className="historial-title">Tus consultas recientes:</p>
+                                <div className="historial-container">
+                                    {preguntasRecientes.map((p) => (
+                                        <button
+                                            key={p}
+                                            className="historial-btn"
+                                            onClick={() => handleSearch(p)}
+                                        >
+                                            {p}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <p className="instruction-text">Preguntas frecuentes:</p>
+                        <div className="faqs-container">
+                            {faqs.map((faq) => (
+                                <button
+                                    key={faq.pregunta}
+                                    className="faq-button"
+                                    onClick={() => handleSearch(faq.pregunta, faq.respuesta)}
+                                >
+                                    {faq.pregunta}
+                                </button>
+                            ))}
+                        </div>
+
                         <div className="input-group">
                             <input
                                 className="main-input"
