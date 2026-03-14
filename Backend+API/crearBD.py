@@ -9,6 +9,7 @@ from langchain_chroma import Chroma
 CSV_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultados_scrapping.csv")
 DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
+COLLECTION = "TFG_prueba"
 
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
@@ -56,5 +57,5 @@ def crear_DB(csv_path : str = CSV_PATH):
         documents=docs,
         embedding=embed_model,
         persist_directory=DB_PATH,
-        collection_name="TFG_prueba"
+        collection_name=COLLECTION
     )

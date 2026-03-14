@@ -1,14 +1,13 @@
 # pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4 sentence-transformers rank_bm25 fastembed
 import os
-import csv
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.documents import Document
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_community.retrievers import BM25Retriever
 from langchain_chroma import Chroma
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import CrossEncoder
+from crearBD import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
 
 RAG = None
 reranker = None
@@ -36,16 +35,14 @@ def crear_RAG():
     global RAG
 
     #Se crea el modelo de embedings
-    embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
+    embed_model = FastEmbedEmbeddings(model_name=EMBED_MODEL)
 
-    DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
-                           
     if not os.path.exists(DB_PATH):
-        crear_DB()
+        crear_DB()                           
 
     vector_store = Chroma(embedding_function=embed_model,
                           persist_directory=DB_PATH,
-                          collection_name="TFG_prueba")
+                          collection_name=COLLECTION)
     # K es el número de chunks que se añaden al contexto
     retriever = vector_store.as_retriever(search_kwargs={'k': 10})
 
@@ -60,7 +57,7 @@ def crear_RAG():
     bm25_retriever.k = 10
 
     def retrieve_and_rerank(pregunta: str):
-        # 1. Recupera los k candidatos iniciales
+        # Recupera los k candidatos iniciales
         #docs = retriever.invoke(pregunta)
 
         #vector_docs = retriever.invoke(pregunta)
@@ -75,13 +72,14 @@ def crear_RAG():
         for q in queries:
             docs.extend(retriever.invoke(q))
 
+        # Deduplicacion por contenido
         docs = list({doc.page_content: doc for doc in docs}.values())
 
-        # 2. Puntúa cada par (pregunta, chunk)
+        # Puntúa cada par (pregunta, chunk)
         pares = [[pregunta, doc.page_content] for doc in docs]
         puntuaciones = reranker.predict(pares)
 
-        # 3. Ordena por puntuación descendente y quédate con los top 3
+        # Ordena por puntuación descendente y quédate con los top 3
         docs_ordenados = sorted(
             zip(puntuaciones, docs),
             key=lambda x: x[0],
