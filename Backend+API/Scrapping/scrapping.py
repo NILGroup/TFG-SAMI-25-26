@@ -11,7 +11,7 @@ FICHERO_URLS = "crawling_result.json"
 FICHERO_URLS_PDFS = "crawling_pdfs.json"
 FICHERO_SALIDA = "resultados_scrapping.csv"
 PAUSA_SEGUNDOS = 1.5
-MAX_URLS = None # Para probar funcionamiento de manera rapida, limitar a un numero (20 p.e.).
+MAX_URLS = 30 # Para probar funcionamiento de manera rapida, limitar a un numero (20 p.e.).
 
 HEADERS = {
     "User-Agent": (

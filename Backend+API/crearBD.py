@@ -1,6 +1,6 @@
 import os
 import csv
-from langchain_community.document_loaders import WebBaseLoader
+import re
 from langchain_core.documents import Document
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -11,21 +11,32 @@ DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
 COLLECTION = "TFG_prueba"
 
+def limpiar_texto(texto: str) -> str:
+    # Eliminar caracteres no imprimibles
+    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\n]', ' ', texto)
+    # Colapsar espacios y saltos de linea múltiples
+    texto = re.sub(r' {2,}', ' ', texto)
+    texto = re.sub(r'\n{3,}', '\n\n', texto)
+    return texto.strip()
+ 
+
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"No se encontró el CSV en: {csv_path}")
 
     documents = []
+    filas_omitidas = 0
     with open(csv_path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            texto_principal = row.get("texto_principal", "").strip()
-            titulo = row.get("titulo", "").strip()
-            h1 = row.get("h1", "").strip()
-            h2s = row.get("h2s", "").strip()
+            texto_principal = limpiar_texto(row.get("texto_principal", ""))
+            titulo = limpiar_texto(row.get("titulo", ""))
+            h1 = limpiar_texto(row.get("h1", ""))
+            h2s = limpiar_texto(row.get("h2s", ""))
             url = row.get("url", "").strip()
 
             if len(texto_principal) < 30:
+                filas_omitidas += 1
                 continue
 
             partes = []
@@ -38,7 +49,7 @@ def crear_DB(csv_path : str = CSV_PATH):
             partes.append(texto_principal)
 
             documents.append(Document(
-                page_conent="\n\n".join(partes),
+                page_content="\n\n".join(partes),
                 metadata={"url": url, "titulo":titulo, "h1":h1},
             ))
     
@@ -59,3 +70,4 @@ def crear_DB(csv_path : str = CSV_PATH):
         persist_directory=DB_PATH,
         collection_name=COLLECTION
     )
+    print(f"Base de datos creada en: {DB_PATH}")
