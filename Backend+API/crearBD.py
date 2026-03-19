@@ -24,6 +24,7 @@ def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"No se encontró el CSV en: {csv_path}")
 
+    csv.field_size_limit(10 * 1024 * 1024)  
     documents = []
     filas_omitidas = 0
     with open(csv_path, newline="", encoding="utf-8") as f:
