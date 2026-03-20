@@ -1,5 +1,5 @@
 .header-container {
-    background-color: var(--ucm-red);
+    background-color: var(--accent);
     padding: 12px 24px;
     display: flex;
     justify-content: space-between;

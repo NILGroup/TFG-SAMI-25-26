@@ -91,6 +91,39 @@
     border-color: var(--accent);
 }
 
+.tema-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.tema-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tema-btn.active {
+    border-color: var(--accent);
+    background: var(--bg-secondary);
+    font-weight: 700;
+}
+
+.tema-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
 @media (max-width: 600px) {
     .accessibility-sidebar {
         width: 100%;

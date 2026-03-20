@@ -2,11 +2,11 @@ import { AppRouter } from "../routes/AppRouter";
 import { useAccessibilityStore } from "../store/useAccessibilityStore";
 
 function App() {
-    const { fontSize, highContrast } = useAccessibilityStore();
+    const { fontSize, highContrast, tema } = useAccessibilityStore();
 
     document.documentElement.setAttribute(
         'data-theme',
-        highContrast ? 'high-contrast' : 'default'
+        highContrast ? 'high-contrast' : tema
     );
 
     const globalStyle = {
