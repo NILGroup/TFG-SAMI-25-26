@@ -2,7 +2,6 @@
 
 import uvicorn
 from API import app
-from RAG import crear_RAG
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

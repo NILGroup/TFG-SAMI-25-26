@@ -2,13 +2,13 @@ import os
 import csv
 import re
 from langchain_core.documents import Document
-from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
 CSV_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultados_scrapping.csv")
 DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
-EMBED_MODEL = "BAAI/bge-small-en-v1.5"
+EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
 COLLECTION = "TFG_prueba"
 
 def limpiar_texto(texto: str) -> str:
@@ -59,11 +59,15 @@ def crear_DB(csv_path : str = CSV_PATH):
 
     # se divide el documento en chunks de tamaño 1000 y teniendo en común las últimas 300 palabras de uno con
     # las primeras del siguiente
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=300)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
     docs = text_splitter.split_documents(documents)
 
     os.makedirs(DB_PATH, exist_ok=True)
-    embed_model = FastEmbedEmbeddings(model_name=EMBED_MODEL)
+
+    embed_model = HuggingFaceEmbeddings(
+    model_name=EMBED_MODEL,
+    encode_kwargs={"normalize_embeddings": True}
+    )
 
     Chroma.from_documents(
         documents=docs,
