@@ -63,8 +63,6 @@ const FAQS_POR_CATEGORIA = {
             respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
         }
     ]
-
-
 };
 
 export const QueryPage = () => {
@@ -89,7 +87,7 @@ export const QueryPage = () => {
 
         setQuestion(query);
 
-        if (respuestaDirecta != null) {
+        if (respuestaDirecta !== null) {
             setAnswer(respuestaDirecta);
             setIsSubmitted(true);
             return;
@@ -112,7 +110,12 @@ export const QueryPage = () => {
 
     return (
         <div className="query-page-container" style={{ fontSize: `${fontSize}px` }}>
-            {!isSubmitted ? (
+            {isLoading ? (
+                <div className="loading-screen">
+                    <div className="loading-spinner"></div>
+                    <p>Consultando al asistente...</p>
+                </div>
+            ) : !isSubmitted ? (
                 <div className="search-panel">
                     <h2 className="category-title">Asistente: {categoryId}</h2>
                     <div className="interaction-box">
@@ -154,14 +157,12 @@ export const QueryPage = () => {
                                 onChange={(e) => setQuestion(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder="Escribe aquí..."
-                                disabled={isLoading}
                             />
                             <button
                                 className="search-confirm-btn"
                                 onClick={() => handleSearch()}
-                                disabled={isLoading}
                             >
-                                {isLoading ? 'Consultando...' : 'Consultar'}
+                                Consultar
                             </button>
                         </div>
                         {error && <p style={{ color: 'red', marginTop: '12px' }}>{error}</p>}
