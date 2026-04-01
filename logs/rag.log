@@ -1,0 +1,234 @@
+2026-04-01 10:28:06 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:28:06 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:28:48 | DEBUG | Queries generadas en 42.40s (6 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] ¡Claro! Aquí te presento 4 reformulaciones diferentes de la pregunta para buscar información en una base de conocimiento:
+    [3] 1. ¿Quién es el titular del cargo de decano en la Facultad de Educación?
+    [4] 2. ¿A quién se le atribuye el cargo de liderazgo en la Facultad de Educación?
+    [5] 3. ¿Quién ejerce la autoridad académica como decano de la Facultad de Educación?
+    [6] 4. ¿Quién es el responsable administrativo y académico de la Facultad de Educación?
+2026-04-01 10:28:48 | DEBUG | Lanzando 6 búsquedas vectoriales...
+2026-04-01 10:31:57 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:31:57 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:32:04 | DEBUG | Queries generadas en 7.04s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Quién es el titular de la carrera de educación en la Universidad de San Francisco?
+    [3] 2. ¿Cuál es el nombre del rector de la Facultad de Educación?
+    [4] 3. ¿A quién me dirijo para obtener información sobre el cargo de director de la Facultad de Educación?
+    [5] 4. ¿Quién es el encargado de la carrera de educación en la Universidad Católica?
+2026-04-01 10:32:04 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:32:04 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:32:04 | DEBUG |   Query [2/5]: '1. ¿Quién es el titular de la carrera de educación en la Uni' → 10 docs recuperados
+2026-04-01 10:32:04 | DEBUG |   Query [3/5]: '2. ¿Cuál es el nombre del rector de la Facultad de Educación' → 10 docs recuperados
+2026-04-01 10:32:05 | DEBUG |   Query [4/5]: '3. ¿A quién me dirijo para obtener información sobre el carg' → 10 docs recuperados
+2026-04-01 10:32:05 | DEBUG |   Query [5/5]: '4. ¿Quién es el encargado de la carrera de educación en la U' → 10 docs recuperados
+2026-04-01 10:32:05 | DEBUG | Docs tras deduplicación: 27 (de 50 totales) — 0.75s
+2026-04-01 10:32:10 | DEBUG | Reranking completado en 5.45s
+2026-04-01 10:37:07 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:37:07 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:37:10 | DEBUG | Queries generadas en 3.00s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] *¿Quién es el decano de la Facultad de Educación?
+    [3] *¿Cuál es la información del decano de la Facultad de Educación?
+    [4] *¿En qué posición se encuentra el decano de la Facultad de Educación?
+    [5] *¿Qué información se puede encontrar sobre el decano de la Escuela de Educación?
+2026-04-01 10:37:10 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:37:10 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:37:10 | DEBUG |   Query [2/5]: '*¿Quién es el decano de la Facultad de Educación?' → 10 docs recuperados
+2026-04-01 10:37:10 | DEBUG |   Query [3/5]: '*¿Cuál es la información del decano de la Facultad de Educac' → 10 docs recuperados
+2026-04-01 10:37:10 | DEBUG |   Query [4/5]: '*¿En qué posición se encuentra el decano de la Facultad de E' → 10 docs recuperados
+2026-04-01 10:37:10 | DEBUG |   Query [5/5]: '*¿Qué información se puede encontrar sobre el decano de la E' → 10 docs recuperados
+2026-04-01 10:37:10 | DEBUG | Docs tras deduplicación: 17 (de 50 totales) — 0.41s
+2026-04-01 10:37:21 | DEBUG | Reranking completado en 10.66s
+2026-04-01 10:41:38 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:41:38 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:41:39 | DEBUG | Queries generadas en 1.57s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] *¿Quién es el decano de la Facultad de Educación del Instituto Universitario de La Laguna?
+    [3] *¿Cuál es la información de contacto del decano de la Facultad de Educación de la Universidad Autónoma de Madrid?
+    [4] *¿Dónde puedo encontrar la información de contacto del rector o decano de la Facultad de Educación de la Universidad Complutense de Madrid?
+    [5] *¿Quién es el titular de la carrera de Magisterio y cómo puedo contactarlo desde la universidad de Granada?
+2026-04-01 10:41:39 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:41:40 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:41:40 | DEBUG |   Query [2/5]: '*¿Quién es el decano de la Facultad de Educación del Institu' → 10 docs recuperados
+2026-04-01 10:41:40 | DEBUG |   Query [3/5]: '*¿Cuál es la información de contacto del decano de la Facult' → 10 docs recuperados
+2026-04-01 10:41:40 | DEBUG |   Query [4/5]: '*¿Dónde puedo encontrar la información de contacto del recto' → 10 docs recuperados
+2026-04-01 10:41:40 | DEBUG |   Query [5/5]: '*¿Quién es el titular de la carrera de Magisterio y cómo pue' → 10 docs recuperados
+2026-04-01 10:41:40 | DEBUG | Docs tras deduplicación: 31 (de 50 totales) — 0.46s
+2026-04-01 10:41:57 | DEBUG | Reranking completado en 16.90s
+2026-04-01 10:45:14 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:45:14 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:45:16 | DEBUG | Queries generadas en 1.04s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Cuál es el nombre del decano de la Facultad de Educación?
+    [3] 2. Quién ocupa el cargo de decano de la Facultad de Educación?
+    [4] 3. En qué universidad se encuentra el decano de la Facultad de Educación?
+    [5] 4. ¿Cómo puedo encontrar información sobre el decano de la Facultad de Educación?
+2026-04-01 10:45:16 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:45:16 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:45:16 | DEBUG |   Query [2/5]: '1. ¿Cuál es el nombre del decano de la Facultad de Educación' → 10 docs recuperados
+2026-04-01 10:45:16 | DEBUG |   Query [3/5]: '2. Quién ocupa el cargo de decano de la Facultad de Educació' → 10 docs recuperados
+2026-04-01 10:45:16 | DEBUG |   Query [4/5]: '3. En qué universidad se encuentra el decano de la Facultad ' → 10 docs recuperados
+2026-04-01 10:45:16 | DEBUG |   Query [5/5]: '4. ¿Cómo puedo encontrar información sobre el decano de la F' → 10 docs recuperados
+2026-04-01 10:45:16 | DEBUG | Docs tras deduplicación: 18 (de 50 totales) — 0.39s
+2026-04-01 10:45:27 | DEBUG | Reranking completado en 11.34s
+2026-04-01 10:46:24 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:46:24 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:46:26 | DEBUG | Queries generadas en 1.28s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Quién es el decano de la Facultad de Educación?
+    [3] 2. Qué persona es la cabeza de la Facultad de Educación?
+    [4] 3. ¿A quién se le atribuye la dirección de la Facultad de Educación?
+    [5] 4. Quien es el encargado administrativo de la Facultad de Educación?
+2026-04-01 10:46:26 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:46:26 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:46:26 | DEBUG |   Query [2/5]: '1. ¿Quién es el decano de la Facultad de Educación?' → 10 docs recuperados
+2026-04-01 10:46:26 | DEBUG |   Query [3/5]: '2. Qué persona es la cabeza de la Facultad de Educación?' → 10 docs recuperados
+2026-04-01 10:46:26 | DEBUG |   Query [4/5]: '3. ¿A quién se le atribuye la dirección de la Facultad de Ed' → 10 docs recuperados
+2026-04-01 10:46:26 | DEBUG |   Query [5/5]: '4. Quien es el encargado administrativo de la Facultad de Ed' → 10 docs recuperados
+2026-04-01 10:46:26 | DEBUG | Docs tras deduplicación: 19 (de 50 totales) — 0.40s
+2026-04-01 10:46:30 | DEBUG | Reranking completado en 3.76s
+2026-04-01 10:50:45 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:50:45 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:50:47 | DEBUG | Queries generadas en 1.42s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Quién es el responsable académico de la Facultad de Educación?
+    [3] 2. ¿Cuál es el decano titular de la Escuela de Educación?
+    [4] 3. ¿Quién ocupa el cargo de director académico de la Universidad en la Facultad de Ciencias Educativas?
+    [5] 4. ¿A quién corresponde asumir la función de jefe docente y administrativo de la Facultad de Educación?
+2026-04-01 10:50:47 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:50:47 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:50:47 | DEBUG |   Query [2/5]: '1. ¿Quién es el responsable académico de la Facultad de Educ' → 10 docs recuperados
+2026-04-01 10:50:47 | DEBUG |   Query [3/5]: '2. ¿Cuál es el decano titular de la Escuela de Educación?' → 10 docs recuperados
+2026-04-01 10:50:47 | DEBUG |   Query [4/5]: '3. ¿Quién ocupa el cargo de director académico de la Univers' → 10 docs recuperados
+2026-04-01 10:50:47 | DEBUG |   Query [5/5]: '4. ¿A quién corresponde asumir la función de jefe docente y ' → 10 docs recuperados
+2026-04-01 10:50:47 | DEBUG | Docs tras deduplicación: 20 (de 50 totales) — 0.41s
+2026-04-01 10:50:52 | DEBUG | Reranking completado en 5.31s
+2026-04-01 10:51:48 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:51:48 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:51:49 | DEBUG | Queries generadas en 1.32s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Cuál es la identidad del decano de la Facultad de Educación?
+    [3] 2. ¿Quién ocupa el cargo de decano en la Facultad de Educación?
+    [4] 3. ¿Con quién se encuentra el decano de la Facultad de Educación en la Universidad?
+    [5] 4. ¿Qué funcionario es el encargado del liderazgo de la Facultad de Educación?
+2026-04-01 10:51:49 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:51:50 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:51:50 | DEBUG |   Query [2/5]: '1. ¿Cuál es la identidad del decano de la Facultad de Educac' → 10 docs recuperados
+2026-04-01 10:51:50 | DEBUG |   Query [3/5]: '2. ¿Quién ocupa el cargo de decano en la Facultad de Educaci' → 10 docs recuperados
+2026-04-01 10:51:50 | DEBUG |   Query [4/5]: '3. ¿Con quién se encuentra el decano de la Facultad de Educa' → 10 docs recuperados
+2026-04-01 10:51:50 | DEBUG |   Query [5/5]: '4. ¿Qué funcionario es el encargado del liderazgo de la Facu' → 10 docs recuperados
+2026-04-01 10:51:50 | DEBUG | Docs tras deduplicación: 22 (de 50 totales) — 0.40s
+2026-04-01 10:52:01 | DEBUG | Reranking completado en 11.14s
+2026-04-01 10:55:00 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:55:00 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:55:02 | DEBUG | Queries generadas en 1.43s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Cuál es la identidad del decano de la Facultad de Educación?
+    [3] 2. ¿Quién está a cargo actualmente como decano de la Facultad de Educación?
+    [4] 3. ¿Cuál es el nombre y título del decano responsable de la Facultad de Educación?
+    [5] 4. ¿En qué universidad actualmente se desempeña como decano la persona encargada de la Facultad de Educación?
+2026-04-01 10:55:02 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:55:02 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:55:02 | DEBUG |   Query [2/5]: '1. ¿Cuál es la identidad del decano de la Facultad de Educac' → 10 docs recuperados
+2026-04-01 10:55:02 | DEBUG |   Query [3/5]: '2. ¿Quién está a cargo actualmente como decano de la Faculta' → 10 docs recuperados
+2026-04-01 10:55:02 | DEBUG |   Query [4/5]: '3. ¿Cuál es el nombre y título del decano responsable de la ' → 10 docs recuperados
+2026-04-01 10:55:02 | DEBUG |   Query [5/5]: '4. ¿En qué universidad actualmente se desempeña como decano ' → 10 docs recuperados
+2026-04-01 10:55:02 | DEBUG | Docs tras deduplicación: 17 (de 50 totales) — 0.41s
+2026-04-01 10:55:13 | DEBUG | Reranking completado en 10.65s
+2026-04-01 10:55:13 | DEBUG | Top 5 fragmentos recuperados:
+   Fragmento #1
+     URL:    
+     Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+     Texto:  Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+   Fragmento #2
+     URL:    
+     Titulo: MEMO-INFAN_22may2014 para la web
+     Texto:  guno de los restantes Títulos de Grado ni Postgrado que se impartan.  Del conjunto de personal académico del Centro, el 7 1,38% (252 Profesores) tiene una expe-  riencia docente en los ámbitos de la Educación y la Formación del Profesorado de más de 10  años, el 18,70% (66) entre 5 y 10 años, y el 9...
+   Fragmento #3
+     URL:    
+     Titulo: MODELO DE MEMORIA ANUAL DE SEGUIMIENTO DE LOS TÍTULOS DE GRADO EN MAESTRO EN EDUCACIÓN PRIMARIA
+     Texto:  al departamento  El docente correspondiente no se había incorporado a la  docencia porque no le habían avisado de rectorado para  la firma de contrato. Mientras tanto diferentes docentes  del departamento habían realizado sustituciones  Queja respecto a la  matriculación,  propone hacerla por  nota ...
+   Fragmento #4
+     URL:    
+     Titulo: 
+     Texto:  matrícula. El profesor escribe un breve informe, con datos objetivos, que posteriormente es estudiado por la Comisión de Admisiones, que está integrada por:  El/a Director/a.  El/a Jefe de Estudios.  El/a Secretario/a.  El Jefe de sección de la Secretaría de alumnos.  Un/a profesor/a, Coordinador de...
+   Fragmento #5
+     URL:    
+     Titulo: Máster Universitario en Psicopedagogía | Facultad de Educación - Centro de Formación del Profesorado.
+     Texto:  Titulo: Máster Universitario en Psicopedagogía | Facultad de Educación - Centro de Formación del Profesorado.  H1: Facultad de Educación Centro de Formación del Profesorado  H2s: Conoce la Facultad de Educación UCM | Acceso a Másteres UCM
+2026-04-01 10:55:13 | DEBUG | Retrieve & Rerank completado en 12.50s total
+2026-04-01 10:57:49 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:57:49 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 10:57:51 | DEBUG | Queries generadas en 1.27s (5 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Quién es el rector de la Universidad de Educación?
+    [3] 2. ¿Cuál es el nombre del titular de la Facultad de Pedagogía?
+    [4] 3. ¿Qué cargo ocupa el director de la Escuela de Educación Superior?
+    [5] 4. ¿A quién se refiere el título "Director General" de la Escuela Universitaria de Educación?
+2026-04-01 10:57:51 | DEBUG | Lanzando 5 búsquedas vectoriales...
+2026-04-01 10:57:51 | DEBUG |   Query [1/5]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 10:57:51 | DEBUG |   Query [2/5]: '1. ¿Quién es el rector de la Universidad de Educación?' → 10 docs recuperados
+2026-04-01 10:57:51 | DEBUG |   Query [3/5]: '2. ¿Cuál es el nombre del titular de la Facultad de Pedagogí' → 10 docs recuperados
+2026-04-01 10:57:51 | DEBUG |   Query [4/5]: '3. ¿Qué cargo ocupa el director de la Escuela de Educación S' → 10 docs recuperados
+2026-04-01 10:57:51 | DEBUG |   Query [5/5]: '4. ¿A quién se refiere el título "Director General" de la Es' → 10 docs recuperados
+2026-04-01 10:57:51 | DEBUG | Docs tras deduplicación: 24 (de 50 totales) — 0.21s
+2026-04-01 10:57:55 | DEBUG | Reranking completado en 4.55s
+2026-04-01 10:57:55 | DEBUG | Top 5 fragmentos recuperados:
+   Fragmento #1
+     URL:    
+     Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+     Texto:  Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+   Fragmento #2
+     URL:    
+     Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+     Texto:  clave que se han abordado en las distintas reuniones.     2. ANÁLISIS DE LA ORGANIZACIÓN Y FUNCIONAMIENTO DE LOS MECANISMOS DE  COORDINACIÓN DEL TÍTULO  La coordinación del título tiene tres elementos fundamentales   El Coordinador del máster   La comisión de coordinación del título compuesta por todos los profesores que imparten  docencia en asignaturas   El conjunto de profesores, todos los que imparten asignaturas y también los directores  de TFM.  El coordinador del máster se encarga de responder a las peticiones de información de futuros  estudiantes y orientarles académicamente, llevar a cabo la baremación de las preinscripciones  de los estudiantes del máster, coordinar a los docentes de las distintas asignaturas revisando las  distintas guías de las materias impartidas y evitar solapamientos de contenidos , gestionar las  reclamaciones de los estudiantes respecto a profesores y actuar de mediador, distribuir los TFM  considerando la afinidad entre la especialización investigadora de los docentes y los intereses  de los estudiantes, realizar informes para la convalidación de asignaturas, actualizar la web del  máster y elaborar las memorias de seguimiento y acreditación del título.  Se han llevado a cabo c inco reuniones de la comisión de coordinación del título , como se  muestra en la siguiente tabla, para abordar temas relacionados con las guías de las asignaturas,  el proceso de asignación de TFM, los exámenes y el proceso de acreditación por el que pasó el  máster. MODELO DE MEMORIA ANUAL DE SEGUIMIENTO DE LOS TÍTULOS DE GRADO Y MÁSTER  CURSO 2017-18  Página 14 de 27  Además, el coordinador atiende a las peticiones de docentes de las distintas materias y tutores  de TFM, por ejemplo, la solicitud y gestión de financiación para traer expertos que lleven a cabo  una formación complementaria de los estudiantes en el caso de los primeros, o el asesoramiento  en el uso de la herramienta de detección de plagio en el caso de los segundos.
+   Fragmento #3
+     URL:    
+     Titulo: MEMO-INFAN_22may2014 para la web
+     Texto:  guno de los restantes Títulos de Grado ni Postgrado que se impartan.  Del conjunto de personal académico del Centro, el 7 1,38% (252 Profesores) tiene una expe-  riencia docente en los ámbitos de la Educación y la Formación del Profesorado de más de 10  años, el 18,70% (66) entre 5 y 10 años, y el 9,92% (35) tiene una experiencia investigadora de  menos de 5 años.  Análogamente, el 71,38% del Profesorado (252 Profesores) tiene una experiencia investigado-  ra de más de 10 años en los ámbitos de la Educación y la Formación del Profesorado, el  18,70% (66 Profesores) entre 5 y 10 años, y el 9,92 % (35 Profesores) tiene una experiencia  investigadora de menos de 5 años.  La justificación requerida acerca de la disposición de Profesorado adecuado para ejercer las  tutorías del Prácticum de las diferentes Titulacion es de Grado del Centro se basa en una evi-  dencia: dichas tutorías ya se están realizando desd e hace décadas en las Diplomaturas de Ma-  gisterio, y desde su inclusión en el Catálogo de Títulos consecuentes a la LRU.    Experiencia docente: quinquenios   Menos de 5 años Entre 5 y 10 Más de 10 años   N % N % N %  Experiencia docen-  te 65 18 53 15 233 66    Experiencia investigadora: Sexenios de investigación  N de sexenios  posibles 1 2 3 4 5 6 Total  N profesores 36 28 22 4 4 2 96  N sexenios 36 56 66 16 20 12 206     Distribución del profesorado por departamentos  Distribución de profesores por departamento según sexo  Departamento Profesores  %  Profesores  Profesoras  %  Profesoras  TOTAL  Teoría e Histo- 24 58,54% 17 41,46% 41  127 de 152    ria de la Edu-  cación  Métodos de  Investigación  y Diagnóstico  en Educación  11 34,38% 21 65,63% 32  Didáctica y  Organización  Escolar  26 57,78% 19 42,22% 45  Psicología  Evolutiva y de  la Educación  16 35,56% 29 64,44% 45  Didáctica de  las Matemáti-  cas  8 44,44% 10 55,56% 18  Didáctica de la  Lengua y la  Literatura  8 20,51% 31 79,49% 39  Didáctica de  las Ciencias  Experimenta-  les
+   Fragmento #4
+     URL:    
+     Titulo: 
+     Texto:  Titular de Escuela Universitaria, TUI: Titular de Universidad Interino, PCD: Profesor Contratado Doctor, AYD: Ayu- dante Doctor, AS: Asociado, ASTP: Asociado a Tiempo Parcial, PC: Profesor Contratado. ESTIMACIÓN DEL PROFESORADO PARA EL CURSO DE ADAPTACIÓN DE DIPLOMATURA DE MAESTRO ES- PECIALIDAD EDUCACIÓN PRIMARIA AL GRADO DE MAESTRO EN EDUCACIÓN PRIMARIA La estimación del número de profesores para el curso de adaptación al Grado de Maestro en Educación Primaria se realiza aplicando el XII Convenio de ámbito estatal para los Centros de Educación Universitaria e Investigación en cuanto a dedicación docente en horas de docencia. La tabla que se presenta a continuación parte de una oferta de 30 plazas con un Grupo de estudiantes: TIPO DE CRÉDITOS CRÉDITOS ECTS (ESTUDIANTE)/N  ASIGNATURAS N DE ASIG. X N CRÉDITOS X N DE GRUPOS TOTAL CRÉDITOS TRABAJO DO- CENTE PARTE I Asignaturas 22 créditos ECTS 4 asignaturas 3 x 6 x 1 1 x 4 x 1 22 TFG 6 créditos por estudiante (1,5 créditos de carga docente prof. por estudiante) 30 estudiantes x 0,58 = 17,4 PARTE II Asignaturas 12 créditos ECTS 2 asignaturas 2 x 6 x 1 12 TOTAL 51,4 créditos El número total de créditos docentes necesarios para atender las necesidades del Curso de Adaptación al Grado de Maestro en Educación Primaria son 51,4 créditos estimados de carga docente, correspondiente a un total 5 profeso- res. ESTIMACIÓN DEL PROFESORADO PARA EL CURSO DE ADAPTACIÓN DE DIPLOMATURA DE MAESTRO EN EDUCACIÓN ESPECIAL AL GRADO DE MAESTRO EN EDUCACIÓN PRIMARIA La estimación del número de profesores para el curso de adaptación al Grado de Maestro en Educación Primaria se realiza aplicando el XII Convenio de ámbito estatal para los Centros de Educación Universitaria e Investigación en csv: 159562055588385220008625 Identificador : 2500912 65 / 144 cuanto a dedicación docente en horas de docencia. La tabla que se presenta a continuación parte de una oferta de 30 plazas con un Grupo de estudiantes:
+   Fragmento #5
+     URL:    
+     Titulo: MEMO-INFAN_22may2014 para la web
+     Texto:  Servicio de Coordinación y Gestión Académica   Dirección del Centro donde esté ubicada la titulación   Departamentos implicados en las enseñanzas, y   Utilizando el resto de procedimientos de recogida d e información del Sistema de In-  formación de la titulación que se reseñan en el apartado final.  En dicho informe se recogerá y analizará información sobre los siguientes aspectos:   Adecuación y difusión del programa formativo.   Acceso e ingreso de estudiantes, incluyendo planes de acogida o tutorización.   Coordinación del profesorado de la titulación.   Orientación formativa a los/las estudiantes y tambi én orientación sobre salidas profe-  sionales.   Recursos e infraestructuras de la titulación.   Estructura y características del profesorado y personal de apoyo de la titulación.   Información general sobre la matrícula y estructura de grupos de docencia, movilidad  de estudiantes, estudiantes en prácticas y otros.  En función de este informe, la Comisión de Calidad de Centro elaborará una propuesta de  140 de 152    mejoras que remitirá para su aprobación a la Junta de Centro. El seguimiento de la aplicación  de las mejoras propuestas y aprobadas por la Junta de Centro será realizado por la Comisión  de Calidad que elaborará el correspondiente informe de seguimiento y lo difundirá, tal y como  se especifica en el último apartado.  9.2.2.1.3. Satisfacción de los actores implicados en la titulación  La información sobre la valoración global y sobre a spectos específicos de la titulación y de  los actores implicados en la misma (alumnado, profe sorado y personal de apoyo) se obtendrá  mediante encuestas elaboradas específicamente con e ste fin y fundamentadas en las caracte-  rísticas y organización del centro, de la titulació n y de los procesos formativos para el logro  de las competencias definidas. También se pueden ut ilizar otras técnicas que completen y  complementen la información de las encuestas para profundizar en causas u otros aspectos.
+2026-04-01 10:57:55 | DEBUG | Retrieve & Rerank completado en 6.03s total
+2026-04-01 11:03:30 | DEBUG | [Retrieve & Rerank] Pregunta recibida: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 11:03:30 | DEBUG | Generando queries adicionales para: 'Quien es el decano de la facultad de educacion?'
+2026-04-01 11:03:33 | DEBUG | Queries generadas en 2.87s (4 en total):
+    [1] Quien es el decano de la facultad de educacion?
+    [2] 1. ¿Cuál es el título académico del rector de la Universidad Nacional?
+    [3] 2. ¿Quién es el director de la licenciatura en Educación?
+    [4] 3. ¿A quién me dirijo para obtener información sobre el currículum académico de la Escuela de Ciencias?
+2026-04-01 11:03:33 | DEBUG | Lanzando 4 búsquedas vectoriales...
+2026-04-01 11:03:33 | DEBUG |   Query [1/4]: 'Quien es el decano de la facultad de educacion?' → 10 docs recuperados
+2026-04-01 11:03:33 | DEBUG |   Query [2/4]: '1. ¿Cuál es el título académico del rector de la Universidad' → 10 docs recuperados
+2026-04-01 11:03:33 | DEBUG |   Query [3/4]: '2. ¿Quién es el director de la licenciatura en Educación?' → 10 docs recuperados
+2026-04-01 11:03:33 | DEBUG |   Query [4/4]: '3. ¿A quién me dirijo para obtener información sobre el curr' → 10 docs recuperados
+2026-04-01 11:03:33 | DEBUG | Docs tras deduplicación: 26 (de 40 totales) — 0.19s
+2026-04-01 11:03:38 | DEBUG | Reranking completado en 4.87s
+2026-04-01 11:03:38 | DEBUG | Top 5 fragmentos recuperados:
+   Fragmento #1
+     URL:    
+     Titulo: 
+     Texto:  número de la CM (Competencia del Módulo) a la que se asocia. El tercer dígito es el número de orden dentro de la Materia. CM8.1.1Comprender los principios básicos y las leyes fundamentales de las Ciencias Experimentales (Física, Química, Biología y Geología). CM8.1.2 Conocer el currículo escolar de estas Ciencias. CM8.2.1 Plantear y resolver problemas asociados con las ciencias a la vida cotidiana. CM8.2.2 Valorar las ciencias como un hecho cultural. CM8.2.3 Reconocer la mutua influencia entre ciencia, sociedad y desarrollo tecnológico, así como las conductas ciudadanas pertinentes, para procurar un futuro sostenible. CM8.2.4 Desarrollar y evaluar contenidos del currículo mediante recursos didácticos apropiados y promover la adquisición de competencias básicas en los estudiantes. D.2.4.1) Asignaturas vinculadas a esta materia Denominación de la asignatura Fundamentos y Didáctica de la Biología Créditos ECTS 6.0 Carácter Obligatorias Contenidos 1. El currículum de Biología en la Educación Primaria. 2. Los seres vivos y su tratamiento en la escuela. 3. El ser humano como entidad biológi- ca y su tratamiento en la escuela. En los puntos 2 y 3 se tratarán además de los contenidos científicos, las dificultades de aprendizaje, así como los recursos y materiales correspondientes. csv: 159562055588385220008625 Identificador : 2500912 41 / 144 Generales CG3. Conocer los fundamentos, principios y características de la Educación Primaria. CG4. Diseñar, planificar y evaluar el proceso de enseñanza-aprendizaje en el marco de la Escuela como organización educativa. CG6. Cono- cer y aplicar técnicas para la recogida de información a través de la observación u otro tipo de estrategias en pro- cesos de investigación, evaluación e innovación. CG8. Diseñar estrategias didácticas adecuadas a la naturaleza del ámbito científico concreto, partiendo del currículo de Primaria, para el área de Ciencias Experimentales.
+   Fragmento #2
+     URL:    
+     Titulo: BOE 260 de 30/10/2007 Sec 1 Pag 44037 a 44048
+     Texto:  apartado anterior dará derecho a la obtención del título de 44040 Martes 30 octubre 2007 BOE núm. 260 Máster Universitario, con la denominación específica que  figure en el RUCT . 3. La denominación de los títulos de Máster será:  Máster Universitario en T por la Universidad U, siendo T el  nombre del Título y U la denominación de la Universidad  que expide el título. En todo caso, las Administraciones  Públicas velarán por que la denominación del título sea  acorde con su contenido y en su caso, con la normativa  específica de aplicación, y no conduzca a error sobre su  nivel o efectos académicos ni a confusión sobre su conte- nido y, en su caso, efectos profesionales. Artículo 1 1. Enseñanzas de Doctorado. 1. Las enseñanzas de Doctorado tienen como finali- dad la formación avanzada del estudiante en las técnicas  de investigación, podrán incorporar cursos, seminarios u  otras actividades orientadas a la formación investigadora  e incluirá la elaboración y presentación de la correspon- diente tesis doctoral, consistente en un trabajo original de  investigación. 2. La superación de las enseñanzas previstas en el  apartado 1 anterior dará derecho a la obtención del título  de Doctor o Doctora, con la denominación que figure en el  RUCT . 3. La denominación de los títulos de Doctor será:  Doctor o Doctora por la Universidad U, siendo U la deno- minación de la Universidad que expide el título. 4. Así mismo, de acuerdo con lo que establezca la  normativa sobre expedición de títulos, se incluirá infor- mación que especifique la disciplina en la que se ha ela- borado la Tesis Doctoral. CAPÍTULO III Enseñanzas universitarias oficiales de Grado Artículo 12. Directrices para el diseño de títulos de Gra- duado. 1. Los planes de estudios conducentes a la obtención  del título de Graduado serán elaborados por las universi- dades y verificados de acuerdo con lo establecido en el  presente real decreto. 2. Los planes de estudios tendrán 240 créditos, que
+   Fragmento #3
+     URL:    
+     Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+     Texto:  Titulo: MEMORIA ANUAL DE SEGUIMIENTO DEL máster en investigación en educación
+   Fragmento #4
+     URL:    
+     Titulo: MEMO-INFAN_22may2014 para la web
+     Texto:  CM13.1.6 Conocer los momentos más sobresalientes de la historia de las ciencias y las técnicas y su  trascendencia.  CM13.2.1 Elaborar propuestas didácticas en relación con la interacción ciencia, técnica, sociedad y  desarrollo sostenible.  CM13.2.2 Promover el interés y el respeto por el medio natural, social y cultural a través de proyec-  tos didácticos adecuados.  CM13.2.3 Fomentar experiencias de iniciación a las tecnologías de la información y la comunicación  aplicadas a esta área.  Denominación de la asignatura vinculada a la materia 8  f. Asignatura: DIDÁCTICA DE LAS CIENCIAS SOCIALES EN EDUCACIÓN INFANTIL  Descriptor Las aportaciones de la Ciencias Sociales al estudio y análisis del entorno. Su con-  tribución al currículo de la etapa, desde una perspectiva globalizada.  Créditos ECTS 6.0  Contenidos  1. Las Ciencias Sociales y el Conocimiento del Entorno en Educación Infan-  til:  1.1. Concepto de entorno social y cultural.  1.2. Elementos de análisis del entorno.  2. La enseñanza-aprendizaje de las Ciencias Sociales e n la Educación Infan-  til: la adquisición de las nociones espaciales, temporales y sociales.  3. Las Ciencias Sociales en el área de Conocimiento de l Entorno en Educa-  ción Infantil:  3.1. El entorno como núcleo globalizador.  3.2. La educación en valores.  4.  Metodología, estrategias y recursos didácticos en el área de Conocimiento  del Entorno en Educación Infantil: diseño de unidades didácticas.    Competen-  cias  Genera-  les  CG13. Diseñar estrategias didácticas adecuadas a la naturaleza  del ámbito científico concreto, partiendo del currí culo de In-  fantil para el área de las Ciencias Sociales.  Transver-  sales  CT3. Analizar de forma reflexiva y crítica las cues tiones más  relevantes de la sociedad actual que afectan al: im pacto social  y educativo de los lenguajes audiovisuales, cambios en las  relaciones de género e intergeneracionales, multicu lturalidad e
+   Fragmento #5
+     URL:    
+     Titulo: MEMO-INFAN_22may2014 para la web
+     Texto:  guno de los restantes Títulos de Grado ni Postgrado que se impartan.  Del conjunto de personal académico del Centro, el 7 1,38% (252 Profesores) tiene una expe-  riencia docente en los ámbitos de la Educación y la Formación del Profesorado de más de 10  años, el 18,70% (66) entre 5 y 10 años, y el 9,92% (35) tiene una experiencia investigadora de  menos de 5 años.  Análogamente, el 71,38% del Profesorado (252 Profesores) tiene una experiencia investigado-  ra de más de 10 años en los ámbitos de la Educación y la Formación del Profesorado, el  18,70% (66 Profesores) entre 5 y 10 años, y el 9,92 % (35 Profesores) tiene una experiencia  investigadora de menos de 5 años.  La justificación requerida acerca de la disposición de Profesorado adecuado para ejercer las  tutorías del Prácticum de las diferentes Titulacion es de Grado del Centro se basa en una evi-  dencia: dichas tutorías ya se están realizando desd e hace décadas en las Diplomaturas de Ma-  gisterio, y desde su inclusión en el Catálogo de Títulos consecuentes a la LRU.    Experiencia docente: quinquenios   Menos de 5 años Entre 5 y 10 Más de 10 años   N % N % N %  Experiencia docen-  te 65 18 53 15 233 66    Experiencia investigadora: Sexenios de investigación  N de sexenios  posibles 1 2 3 4 5 6 Total  N profesores 36 28 22 4 4 2 96  N sexenios 36 56 66 16 20 12 206     Distribución del profesorado por departamentos  Distribución de profesores por departamento según sexo  Departamento Profesores  %  Profesores  Profesoras  %  Profesoras  TOTAL  Teoría e Histo- 24 58,54% 17 41,46% 41  127 de 152    ria de la Edu-  cación  Métodos de  Investigación  y Diagnóstico  en Educación  11 34,38% 21 65,63% 32  Didáctica y  Organización  Escolar  26 57,78% 19 42,22% 45  Psicología  Evolutiva y de  la Educación  16 35,56% 29 64,44% 45  Didáctica de  las Matemáti-  cas  8 44,44% 10 55,56% 18  Didáctica de la  Lengua y la  Literatura  8 20,51% 31 79,49% 39  Didáctica de  las Ciencias  Experimenta-  les
+2026-04-01 11:03:38 | DEBUG | Retrieve & Rerank completado en 7.93s total

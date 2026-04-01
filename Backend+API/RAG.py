@@ -1,4 +1,4 @@
-# pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4 sentence-transformers rank_bm25 langchain-huggingface transformers
+# pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4 sentence-transformers rank_bm25 langchain-huggingface transformers loguru
 import os
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
@@ -8,6 +8,11 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from sentence_transformers import CrossEncoder
 from crearBD import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
+from loguru import logger
+import time
+
+logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
+           format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}")
 
 RAG = None
 reranker = None
@@ -15,22 +20,31 @@ reranker = None
 model = OllamaLLM(model="llama3.2")
 
 def generar_queries(pregunta: str):
+    logger.debug(f"Generando queries adicionales para: '{pregunta}'")
+    t0 = time.time()
 
     prompt_multiquery = f"""
-    Genera 4 reformulaciones diferentes de la siguiente pregunta
+    Genera 3 reformulaciones diferentes de la siguiente pregunta
     para buscar información en una base de conocimiento.
     Mantén los términos específicos como nombres de grados, facultades y universidades.
 
     Pregunta: {pregunta}
 
-    Devuelve solo las preguntas en español, una por línea.
+    Devuelve solo las preguntas en español, una por línea. No hagas ninguna linea introductoria.
     """
 
     respuesta = model.invoke(prompt_multiquery)
 
     queries = [q.strip() for q in respuesta.split("\n") if q.strip()]
-
-    return [pregunta] + queries
+    queries = [q for q in queries if q.endswith("?")]
+    todas = [pregunta] + queries
+ 
+    elapsed = time.time() - t0
+    queries_formateadas = "\n".join(f"    [{i+1}] {q}" for i, q in enumerate(todas))
+    logger.debug(
+        f"Queries generadas en {elapsed:.2f}s ({len(todas)} en total):\n{queries_formateadas}"
+    )
+    return todas
 
 def crear_RAG():
     global RAG
@@ -69,28 +83,53 @@ def crear_RAG():
 
         #docs = vector_docs + bm25_docs
 
+        logger.debug(f"[Retrieve & Rerank] Pregunta recibida: '{pregunta}'")
+        t_total = time.time()
+
         queries = generar_queries(pregunta)
 
         docs = []
 
-        for q in queries:
-            docs.extend(retriever.invoke(q))
+        logger.debug(f"Lanzando {len(queries)} búsquedas vectoriales...")
+        t_retrieval = time.time()
+        for i, q in enumerate(queries):
+            resultados = retriever.invoke(q)
+            logger.debug(f"  Query [{i+1}/{len(queries)}]: '{q[:60]}' → {len(resultados)} docs recuperados")
+            docs.extend(resultados)
 
         # Deduplicacion por contenido
-        docs = list({doc.page_content: doc for doc in docs}.values())
+        docs_unicos = list({doc.page_content: doc for doc in docs}.values())
+        logger.debug(f"Docs tras deduplicación: {len(docs_unicos)} (de {len(docs)} totales) — {time.time() - t_retrieval:.2f}s")
 
         # Puntúa cada par (pregunta, chunk)
-        pares = [[pregunta, doc.page_content] for doc in docs]
+        t_rerank = time.time()
+        pares = [[pregunta, doc.page_content] for doc in docs_unicos]
         puntuaciones = reranker.predict(pares).tolist()
 
-        # Ordena por puntuación descendente y quédate con los top 3
+        # Ordena por puntuación descendente y se queda con los top 3
         docs_ordenados = sorted(
-            zip(puntuaciones, docs),
+            zip(puntuaciones, docs_unicos),
             key=lambda x: x[0],
             reverse=True
         )
         top_docs = [doc for _, doc in docs_ordenados[:5]]
+        logger.debug(f"Reranking completado en {time.time() - t_rerank:.2f}s")
 
+        fragmentos_log = []
+        for i, doc in enumerate(top_docs):
+            url = doc.metadata.get('url', 'desconocida')
+            titulo = doc.metadata.get('titulo', '')
+            texto_preview = doc.page_content.replace("\n", " ").strip()
+            fragmentos_log.append(
+                f"   Fragmento #{i+1}\n"
+                f"     URL:    {url}\n"
+                f"     Titulo: {titulo}\n"
+                f"     Texto:  {texto_preview}"
+            )
+ 
+        logger.debug("Top 5 fragmentos recuperados:\n" + "\n".join(fragmentos_log))
+ 
+        logger.debug(f"Retrieve & Rerank completado en {time.time() - t_total:.2f}s total")
         return top_docs
 
     prompt_template = ChatPromptTemplate.from_template("""Responde a la pregunta usando el contexto dado.
