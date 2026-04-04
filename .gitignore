@@ -4,3 +4,5 @@ __pycache__/
 venv/
 *.csv
 *.json
+Logs/
+*.log
