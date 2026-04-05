@@ -10,6 +10,7 @@ from sentence_transformers import CrossEncoder
 from crearBD import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
 from loguru import logger
 import time
+import numpy as np
 
 logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
            format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}")
@@ -17,7 +18,7 @@ logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
 RAG = None
 reranker = None
 #usar el modelo que quieras de Ollama, mirar cuales tienes instalado: ollama list, descargar nuevo ollama pull llama3.2
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(model="qwen3.5")
 
 def generar_queries(pregunta: str):
     logger.debug(f"Generando queries adicionales para: '{pregunta}'")
@@ -104,14 +105,32 @@ def crear_RAG():
         # Puntúa cada par (pregunta, chunk)
         t_rerank = time.time()
         pares = [[pregunta, doc.page_content] for doc in docs_unicos]
-        puntuaciones = reranker.predict(pares).tolist()
+        
+        puntuaciones = reranker.predict(pares)
+        puntuaciones = np.array(puntuaciones).flatten().tolist()
 
-        # Ordena por puntuación descendente y se queda con los top 3
+        # Ordena por puntuación descendente y se queda con los top 5
         docs_ordenados = sorted(
             zip(puntuaciones, docs_unicos),
             key=lambda x: x[0],
             reverse=True
         )
+
+        # Loguea TODOS los fragmentos con su puntuación
+        fragmentos_log = []
+        for i, (puntuacion, doc) in enumerate(docs_ordenados):  # <-- desempaquetar la tupla
+            url = doc.metadata.get('url', 'desconocida')
+            titulo = doc.metadata.get('titulo', '')
+            texto_preview = doc.page_content.replace("\n", " ").strip()[:200]  # limitar a 200 chars
+            fragmentos_log.append(
+                f"   Fragmento #{i+1}\n"
+                f"     URL:    {url}\n"
+                f"     Titulo: {titulo}\n"
+                f"     Texto:  {texto_preview}"
+            )
+
+        logger.debug(f"Todos los fragmentos ordenados ({len(docs_ordenados)}):\n" + "\n".join(fragmentos_log))
+
         top_docs = [doc for _, doc in docs_ordenados[:5]]
         logger.debug(f"Reranking completado en {time.time() - t_rerank:.2f}s")
 
