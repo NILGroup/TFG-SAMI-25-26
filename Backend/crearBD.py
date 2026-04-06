@@ -59,8 +59,14 @@ def crear_DB(csv_path : str = CSV_PATH):
 
     # se divide el documento en chunks de tamaño 1000 y teniendo en común las últimas 300 palabras de uno con
     # las primeras del siguiente
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=3500, chunk_overlap=600)
     docs = text_splitter.split_documents(documents)
+
+    for doc in docs:
+        titulo = doc.metadata.get("titulo", "")
+        h1 = doc.metadata.get("h1", "")
+        if titulo or h1:
+            doc.page_content = f"[Fuente: {titulo} | {h1}]\n\n" + doc.page_content
 
     os.makedirs(DB_PATH, exist_ok=True)
 

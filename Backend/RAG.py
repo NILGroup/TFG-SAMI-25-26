@@ -67,12 +67,12 @@ def crear_RAG():
 
     reranker = CrossEncoder("amberoad/bert-multilingual-passage-reranking-msmarco")
 
-    docs = vector_store.get()
-
-    bm25_retriever = BM25Retriever.from_texts(
-        docs["documents"]
-        metadatas=docs["metadatas"]
-    )
+    raw = vector_store.get()
+    bm25_docs = [
+        Document(page_content=text, metadata=meta)
+        for text, meta in zip(raw["documents"], raw["metadatas"])
+    ]
+    bm25_retriever = BM25Retriever.from_documents(bm25_docs)
 
     bm25_retriever.k = 10
 
