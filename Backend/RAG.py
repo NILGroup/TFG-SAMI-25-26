@@ -4,7 +4,7 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
-#from langchain_community.retrievers import BM25Retriever
+from langchain_community.retrievers import BM25Retriever
 from langchain_chroma import Chroma
 from sentence_transformers import CrossEncoder
 from crearBD import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
@@ -20,32 +20,32 @@ reranker = None
 #usar el modelo que quieras de Ollama, mirar cuales tienes instalado: ollama list, descargar nuevo ollama pull llama3.2
 model = OllamaLLM(model="qwen3.5")
 
-def generar_queries(pregunta: str):
-    logger.debug(f"Generando queries adicionales para: '{pregunta}'")
-    t0 = time.time()
-
-    prompt_multiquery = f"""
-    Genera 3 reformulaciones diferentes de la siguiente pregunta
-    para buscar información en una base de conocimiento.
-    Mantén los términos específicos como nombres de grados, facultades y universidades.
-
-    Pregunta: {pregunta}
-
-    Devuelve solo las preguntas en español, una por línea. No hagas ninguna linea introductoria.
-    """
-
-    respuesta = model.invoke(prompt_multiquery)
-
-    queries = [q.strip() for q in respuesta.split("\n") if q.strip()]
-    queries = [q for q in queries if q.endswith("?")]
-    todas = [pregunta] + queries
- 
-    elapsed = time.time() - t0
-    queries_formateadas = "\n".join(f"    [{i+1}] {q}" for i, q in enumerate(todas))
-    logger.debug(
-        f"Queries generadas en {elapsed:.2f}s ({len(todas)} en total):\n{queries_formateadas}"
-    )
-    return todas
+# def generar_queries(pregunta: str):
+#     logger.debug(f"Generando queries adicionales para: '{pregunta}'")
+#     t0 = time.time()
+#
+#     prompt_multiquery = f"""
+#     Genera 3 reformulaciones diferentes de la siguiente pregunta
+#     para buscar información en una base de conocimiento.
+#     Mantén los términos específicos como nombres de grados, facultades y universidades.
+#
+#     Pregunta: {pregunta}
+#
+#     Devuelve solo las preguntas en español, una por línea. No hagas ninguna linea introductoria.
+#     """
+#
+#     respuesta = model.invoke(prompt_multiquery)
+#
+#     queries = [q.strip() for q in respuesta.split("\n") if q.strip()]
+#     queries = [q for q in queries if q.endswith("?")]
+#     todas = [pregunta] + queries
+#
+#     elapsed = time.time() - t0
+#     queries_formateadas = "\n".join(f"    [{i+1}] {q}" for i, q in enumerate(todas))
+#     logger.debug(
+#         f"Queries generadas en {elapsed:.2f}s ({len(todas)} en total):\n{queries_formateadas}"
+#     )
+#     return todas
 
 def crear_RAG():
     global RAG
@@ -67,40 +67,32 @@ def crear_RAG():
 
     reranker = CrossEncoder("amberoad/bert-multilingual-passage-reranking-msmarco")
 
-    #docs = vector_store.get()
+    docs = vector_store.get()
 
-    #bm25_retriever = BM25Retriever.from_texts(
-    #    docs["documents"]
-    #)
+    bm25_retriever = BM25Retriever.from_texts(
+        docs["documents"]
+        metadatas=docs["metadatas"]
+    )
 
-    #bm25_retriever.k = 10
+    bm25_retriever.k = 10
 
     def retrieve_and_rerank(pregunta: str):
-        # Recupera los k candidatos iniciales
-        #docs = retriever.invoke(pregunta)
-
-        #vector_docs = retriever.invoke(pregunta)
-        #bm25_docs = bm25_retriever.invoke(pregunta)
-
-        #docs = vector_docs + bm25_docs
-
         logger.debug(f"[Retrieve & Rerank] Pregunta recibida: '{pregunta}'")
         t_total = time.time()
 
-        queries = generar_queries(pregunta)
-
-        docs = []
-
-        logger.debug(f"Lanzando {len(queries)} búsquedas vectoriales...")
+        # Hybrid retrieval: vectorial + BM25
         t_retrieval = time.time()
-        for i, q in enumerate(queries):
-            resultados = retriever.invoke(q)
-            logger.debug(f"  Query [{i+1}/{len(queries)}]: '{q[:60]}' → {len(resultados)} docs recuperados")
-            docs.extend(resultados)
+        vector_docs = retriever.invoke(pregunta)
+        bm25_docs = bm25_retriever.invoke(pregunta)
+        docs = vector_docs + bm25_docs
+        logger.debug(
+            f"Docs recuperados — vectorial: {len(vector_docs)}, BM25: {len(bm25_docs)} "
+            f"— {time.time() - t_retrieval:.2f}s"
+        )
 
         # Deduplicacion por contenido
         docs_unicos = list({doc.page_content: doc for doc in docs}.values())
-        logger.debug(f"Docs tras deduplicación: {len(docs_unicos)} (de {len(docs)} totales) — {time.time() - t_retrieval:.2f}s")
+        logger.debug(f"Docs tras deduplicación: {len(docs_unicos)} (de {len(docs)} totales)")
 
         # Puntúa cada par (pregunta, chunk)
         t_rerank = time.time()
@@ -118,7 +110,7 @@ def crear_RAG():
 
         # Loguea TODOS los fragmentos con su puntuación
         fragmentos_log = []
-        for i, (puntuacion, doc) in enumerate(docs_ordenados):  # <-- desempaquetar la tupla
+        for i, (puntuacion, doc) in enumerate(docs_ordenados):
             url = doc.metadata.get('url', 'desconocida')
             titulo = doc.metadata.get('titulo', '')
             texto_preview = doc.page_content.replace("\n", " ").strip()[:200]  # limitar a 200 chars
