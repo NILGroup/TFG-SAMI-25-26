@@ -4,5 +4,6 @@ __pycache__/
 venv/
 *.csv
 *.json
+Data/
 Logs/
 *.log

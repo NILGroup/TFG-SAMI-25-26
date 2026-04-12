@@ -1,5 +1,6 @@
 #pip install requests beautifulsoup4 pypdf
 import json # libreria para leer el archivo obtenido en el crawling
+import os #libreria para manejar rutas de archivos
 import time # libreria para hacer pausas entre peticiones
 import csv # libreria para guardar los resultados
 import requests # libreria para hacer peticiones HTTP
@@ -7,9 +8,14 @@ from bs4 import BeautifulSoup # libreria para parsear el HTML de cada pagina
 import pypdf # libreria para extraer texto de PDFs
 import io # libreria para leer el PDF en memoria sin guardarlo en disco
 
-FICHERO_URLS = "crawling_result.json"
-FICHERO_URLS_PDFS = "crawling_pdfs.json"
-FICHERO_SALIDA = "resultados_scrapping.csv"
+BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
+DATA_CRAWLING = os.path.join(BASE_DIR, "Data", "Crawling")
+DATA_SCRAPPING = os.path.join(BASE_DIR, "Data", "Scrapping")
+
+FICHERO_URLS = os.path.join(DATA_CRAWLING,  "crawling_result.json")
+FICHERO_URLS_PDFS = os.path.join(DATA_CRAWLING,  "crawling_pdfs.json")
+FICHERO_SALIDA = os.path.join(DATA_SCRAPPING, "resultados_scrapping.csv")
 PAUSA_SEGUNDOS = 1.5
 MAX_URLS = 30 # Para probar funcionamiento de manera rapida, limitar a un numero (20 p.e.).
 
@@ -179,7 +185,7 @@ def guardar_resultados(resultados, fichero):
     print(f"Resultados guardados en: {fichero}")
         
 if __name__ == "__main__":
-
+    os.makedirs(DATA_SCRAPPING, exist_ok=True)
     # Cargar URLs
     urls = cargar_urls(FICHERO_URLS)
 

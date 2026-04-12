@@ -5,15 +5,15 @@ import time
 from collections import deque
 import os
 
-# --- CONFIGURACIÓN ---
 BASE_URL = "https://educacion.ucm.es/"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_DIR = os.path.join(SCRIPT_DIR, "..", "..", "Data", "Crawling")
-os.makedirs(OUTPUT_DIR, exist_ok=True)  # Crea la carpeta si no existe
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "..", "Data", "Crawling")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-ARCHIVO_SALIDA = os.path.join(OUTPUT_DIR, "crawling_completo_educacion_ucm.json")
+ARCHIVO_SALIDA_PAGINAS = os.path.join(OUTPUT_DIR, "crawling_result.json")
+ARCHIVO_SALIDA_PDFS    = os.path.join(OUTPUT_DIR, "crawling_pdfs.json")
 
 
 def crawl_completo(url_semilla):
@@ -52,10 +52,30 @@ def crawl_completo(url_semilla):
                     print(f"  → PDF directo guardado: {url_actual}")
                 continue
 
-            # --- Caso: página HTML ---
+            # --- Caso: página HTML u otro contenido ---
             res = requests.get(url_actual, headers=HEADERS, timeout=10)
 
-            if res.status_code != 200 or 'text/html' not in res.headers.get('Content-Type', ''):
+            if res.status_code != 200:
+                continue
+
+            content_type = res.headers.get('Content-Type', '')
+
+            if 'text/html' not in content_type:
+                # Guardar como PDF si el Content-Type o el Content-Disposition lo indica
+                content_disposition = res.headers.get('Content-Disposition', '')
+                es_pdf = (
+                    'pdf' in content_type
+                    or content_disposition.lower().endswith('.pdf"')
+                    or content_disposition.lower().endswith(".pdf'")
+                )
+                if es_pdf and url_actual not in pdfs_encontrados:
+                    pdfs_encontrados.add(url_actual)
+                    resultado["pdfs"].append({
+                        "url": url_actual,
+                        "encontrado_en": "content-type-pdf",
+                        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
+                    })
+                    print(f"  → PDF sin extensión guardado: {url_actual}")
                 continue
 
             soup = BeautifulSoup(res.text, 'html.parser')
@@ -65,7 +85,7 @@ def crawl_completo(url_semilla):
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
             })
 
-            # --- Extraer enlaces ---
+            # Extraer enlaces
             extensiones_omitir = ('.jpg', '.png', '.zip', '.docx', '.xlsx', '.css', '.js')
 
             for a in soup.find_all('a', href=True):
@@ -103,13 +123,15 @@ def crawl_completo(url_semilla):
     return resultado
 
 
-# --- EJECUCIÓN ---
 datos = crawl_completo(BASE_URL)
 
-with open(ARCHIVO_SALIDA, 'w', encoding='utf-8') as f:
-    json.dump(datos, f, ensure_ascii=False, indent=4)
+with open(ARCHIVO_SALIDA_PAGINAS, 'w', encoding='utf-8') as f:
+    json.dump(datos["paginas"], f, ensure_ascii=False, indent=4)
+
+with open(ARCHIVO_SALIDA_PDFS, 'w', encoding='utf-8') as f:
+    json.dump(datos["pdfs"], f, ensure_ascii=False, indent=4)
 
 print(f"\nProceso finalizado.")
 print(f"  Páginas únicas encontradas : {len(datos['paginas'])}")
 print(f"  PDFs únicos encontrados    : {len(datos['pdfs'])}")
-print(f"  Resultados guardados en    : {os.path.abspath(ARCHIVO_SALIDA)}")
+print(f"  Resultados guardados en    : {os.path.abspath(OUTPUT_DIR)}")

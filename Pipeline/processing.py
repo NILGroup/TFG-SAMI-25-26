@@ -6,14 +6,14 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
-CSV_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultados_scrapping.csv")
-DB_PATH = os.path.join(os.path.expanduser("~"), ".sami_db", "chroma_db")
+CSV_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Data", "Scrapping", "resultados_scrapping.csv"))
+DB_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Data", "Scrapping", "chroma_db"))
 EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
 COLLECTION = "TFG_prueba"
 
 def limpiar_texto(texto: str) -> str:
     # Eliminar caracteres no imprimibles
-    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\n]', ' ', texto)
+    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\n]', ' ', texto) 
     # Colapsar espacios y saltos de linea múltiples
     texto = re.sub(r' {2,}', ' ', texto)
     texto = re.sub(r'\n{3,}', '\n\n', texto)
@@ -82,3 +82,8 @@ def crear_DB(csv_path : str = CSV_PATH):
         collection_name=COLLECTION
     )
     print(f"Base de datos creada en: {DB_PATH}")
+
+if __name__ == "__main__":
+    print(f"CSV de entrada : {CSV_PATH}")
+    print(f"Base de datos  : {DB_PATH}")
+    crear_DB()
