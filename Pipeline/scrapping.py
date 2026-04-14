@@ -7,6 +7,8 @@ import requests # libreria para hacer peticiones HTTP
 from bs4 import BeautifulSoup # libreria para parsear el HTML de cada pagina
 import pypdf # libreria para extraer texto de PDFs
 import io # libreria para leer el PDF en memoria sin guardarlo en disco
+from datetime import datetime, timezone
+import logging
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
@@ -27,188 +29,215 @@ HEADERS = {
     )
 }
 
-#Funcion para cargar las URLs desde el archivo JSON generado por el crawling
-def cargar_urls(fichero):
-    with open(fichero, "r", encoding = "utf-8") as f:
-        datos = json.load(f)
-    
-    urls_unicas = list({item['url'] for item in datos})
-    print(f"Total URLs únicas cargadas: {len(urls_unicas)}")
-    return urls_unicas
+LOGS_DIR = os.path.join(BASE_DIR, "Logs")
+os.makedirs(LOGS_DIR, exist_ok=True)
 
-def cargar_pdfs(fichero):
+LOG_FILE = os.path.join(LOGS_DIR, "scrapping.log")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE, encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+def _ahora_iso8601() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _fila_error(url: str, tipo: str, estado) -> dict:
+    return {
+        "url":              url,
+        "tipo_documento":   tipo,
+        "estado_http":      estado,
+        "fecha_extraccion": _ahora_iso8601(),
+        "titulo":           "",
+        "h1":               "",
+        "h2s":              "",
+        "texto_principal":  "",
+    }
+
+#Funcion para cargar las URLs desde el archivo JSON generado por el crawling
+def cargar_urls(fichero: str) -> list:
+    with open(fichero, "r", encoding="utf-8") as f:
+        datos = json.load(f)
+    urls = list({item["url"] for item in datos})
+    print(f"Total URLs únicas cargadas: {len(urls)}")
+    logger.info(f"URLs cargadas: {len(urls)}")
+    return urls
+
+def cargar_pdfs(fichero: str) -> list:
     try:
         with open(fichero, "r", encoding="utf-8") as f:
             datos = json.load(f)
-        urls_unicas = list({item['url'] for item in datos})
-        print(f"Total PDFs únicos cargados: {len(urls_unicas)}")
-        return urls_unicas
+        urls = list({item["url"] for item in datos})
+        print(f"Total PDFs únicos cargados: {len(urls)}")
+        logger.info(f"PDFs cargados: {len(urls)}")
+        return urls
     except FileNotFoundError:
         print("crawling_pdfs.json no encontrado, se omiten los PDFs.")
+        logger.warning("crawling_pdfs.json no encontrado")
         return []
     
 #Funcion para extraer el contenido de una pagina dada su URL
-def extraer_contenido(url):
+def extraer_contenido(url: str) -> dict:
+    fecha = _ahora_iso8601()
     try:
-        respuesta = requests.get(url,headers= HEADERS,timeout=10)
+        respuesta = requests.get(url, headers=HEADERS, timeout=10)
+
         if respuesta.status_code != 200:
-            print (f"Error: {respuesta.status_code} - {url}")
-            return {
-                "url": url,
-                "estado": respuesta.status_code,
-                "titulo": "",
-                "contenido": "",
-                "h1": "",
-                "h2s": "",
-                "texto_principal": ""
-            }
-        
-        # A partir de aqui parseamos el HTML para extraer la informacion relevante
+            print(f"  [HTTP {respuesta.status_code}] {url}")
+            logger.warning(f"[WEB][HTTP {respuesta.status_code}] {url}")
+            return _fila_error(url, "web", respuesta.status_code)
+
         soup = BeautifulSoup(respuesta.text, "html.parser")
 
-        titulo = soup.find("title")
-        titulo = titulo.get_text(strip=True) if titulo else ""
+        tag_titulo = soup.find("title")
+        titulo = tag_titulo.get_text(strip=True) if tag_titulo else ""
 
-        meta_descripcion = soup.find("meta", attrs={"name": "description"})
-        descripcion = meta_descripcion["content"].strip() if meta_descripcion and meta_descripcion.get("content") else ""
-
-        h1 = soup.find("h1")
-        h1 = h1.get_text(strip=True) if h1 else ""
+        tag_h1 = soup.find("h1")
+        h1 = tag_h1.get_text(strip=True) if tag_h1 else ""
 
         h2s = [h.get_text(strip=True) for h in soup.find_all("h2")]
-        h2s_texto = " | ".join(h2s) #Se unen para guardar todos los h2 en una misma celda del CSV
+        h2s_texto = " || ".join(h2s)
 
-        # Aqui extraemos el contenido principal de la pagina
-        for tag in soup(["nav", "header", "footer","script","style"]):
-            tag.decompose()# eliminamos elementos que no aportan informacion relevante
-        
-        contenedor = soup.find("main") or soup.find("div", class_="content") or soup.find("body")
+        for tag in soup(["nav", "header", "footer", "script", "style"]):
+            tag.decompose()
+
+        contenedor = (
+            soup.find("main")
+            or soup.find("div", class_="content")
+            or soup.find("body")
+        )
         texto = contenedor.get_text(separator=" ", strip=True) if contenedor else ""
 
-        print(f"Extraído: {url[:70]}")
+        print(f"  [OK] {url[:80]}")
+        logger.info(f"[WEB][OK] {url}")
+
         return {
-            "url": url,
-            "estado": 200,
-            "titulo": titulo,
-            "contenido": descripcion,
-            "h1": h1,
-            "h2s": h2s_texto,
-            "texto_principal": texto
+            "url":              url,
+            "tipo_documento":   "web",
+            "estado_http":      200,
+            "fecha_extraccion": fecha,
+            "titulo":           titulo,
+            "h1":               h1,
+            "h2s":              h2s_texto,
+            "texto_principal":  texto,
         }
+
     except requests.exceptions.Timeout:
-        print(f"Timeout al acceder a: {url}")
-        return {
-            "url": url,
-            "estado": "Timeout",
-            "titulo": "",
-            "contenido": "",
-            "h1": "",
-            "h2s": "",
-            "texto_principal": ""
-        }
+        print(f"  [TIMEOUT] {url}")
+        logger.error(f"[WEB][TIMEOUT] {url}")
+        return _fila_error(url, "web", "Timeout")
+
     except requests.exceptions.ConnectionError:
-        print(f"Error de conexión al acceder a: {url}")
-        return {
-            "url": url,
-            "estado": "Connection Error",
-            "titulo": "",
-            "contenido": "",
-            "h1": "",
-            "h2s": "",
-            "texto_principal": ""
-        }
+        print(f"  [CONNECTION ERROR] {url}")
+        logger.error(f"[WEB][CONNECTION ERROR] {url}")
+        return _fila_error(url, "web", "Connection Error")
+
     except Exception as e:
-        print(f"Error inesperado al acceder a: {url} - {str(e)}")
-        return {
-            "url": url,
-            "estado": "Error inesperado",
-            "titulo": "",
-            "contenido": "",
-            "h1": "",
-            "h2s": "",
-            "texto_principal": ""
-        }
-def extraer_contenido_pdf(url):
+        print(f"  [ERROR] {url} — {e}")
+        logger.exception(f"[WEB][ERROR] {url}")
+        return _fila_error(url, "web", "Error inesperado")
+    
+def extraer_contenido_pdf(url: str) -> dict:
+    fecha = _ahora_iso8601()
     try:
         respuesta = requests.get(url, headers=HEADERS, timeout=20)
-        if respuesta.status_code != 200:
-            print(f"Error: {respuesta.status_code} - {url}")
-            return {
-                "url": url,
-                "estado": respuesta.status_code,
-                "titulo": "",
-                "contenido": "",
-                "h1": "",
-                "h2s": "",
-                "texto_principal": ""
-            }
 
-        # Leer el PDF en memoria
+        content_type = respuesta.headers.get("Content-Type", "")
+        content_disp = respuesta.headers.get("Content-Disposition", "")
+
+        es_pdf = (
+            "pdf" in content_type.lower()
+            or ".pdf" in content_disp.lower()
+            or url.lower().endswith(".pdf")
+        )
+
+        if not es_pdf:
+            print(f"  [AVISO] Content-Type inesperado ({content_type}): {url[:70]}")
+            logger.warning(f"[PDF][CONTENT-TYPE] {content_type} | {url}")
+
+        if respuesta.status_code != 200:
+            print(f"  [HTTP {respuesta.status_code}] {url}")
+            logger.warning(f"[PDF][HTTP {respuesta.status_code}] {url}")
+            return _fila_error(url, "pdf", respuesta.status_code)
+
         pdf = pypdf.PdfReader(io.BytesIO(respuesta.content))
 
         texto = " ".join(pagina.extract_text() or "" for pagina in pdf.pages)
+        titulo_raw = (pdf.metadata.title if pdf.metadata else None) or ""
 
-        titulo = ""
-        if pdf.metadata and pdf.metadata.title:
-            titulo = pdf.metadata.title
+        print(f"  [OK PDF] {url[:80]}")
+        logger.info(f"[PDF][OK] {url}")
 
-        print(f"PDF Extraido: {url[:70]}")
         return {
-            "url": url,
-            "estado": 200,
-            "titulo": titulo,
-            "contenido": "PDF",
-            "h1": "",
-            "h2s": "",
-            "texto_principal": texto
+            "url":              url,
+            "tipo_documento":   "pdf",
+            "estado_http":      200,
+            "fecha_extraccion": fecha,
+            "titulo":           titulo_raw,
+            "h1":               "",
+            "h2s":              "",
+            "texto_principal":  texto,
         }
+
     except Exception as e:
-        print(f"Error inesperado al acceder al PDF: {url} - {str(e)}")
-        return {
-            "url": url,
-            "estado": "Error inesperado",
-            "titulo": "",
-            "contenido": "",
-            "h1": "",
-            "h2s": "",
-            "texto_principal": ""
-        }
+        print(f"  [ERROR PDF] {url} — {e}")
+        logger.exception(f"[PDF][ERROR] {url}")
+        return _fila_error(url, "pdf", "Error inesperado")
+    
 
-def guardar_resultados(resultados, fichero):
-    columnas = ["url", "estado", "titulo", "contenido", "h1", "h2s", "texto_principal"]
+def guardar_resultados(resultados: list, fichero: str) -> None:
+    columnas = [
+        "url",
+        "tipo_documento",
+        "estado_http",
+        "fecha_extraccion",
+        "titulo",
+        "h1",
+        "h2s",
+        "texto_principal",
+    ]
+    try:
+        with open(fichero, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.DictWriter(f, fieldnames=columnas)
+            writer.writeheader()
+            writer.writerows(resultados)
 
-    with open(fichero, "w", newline="", encoding="utf-8-sig")as f:
-        writer = csv.DictWriter(f, fieldnames=columnas)
-        writer.writeheader()
-        writer.writerows(resultados)
+        print(f"\nResultados guardados en: {fichero}")
+        logger.info(f"CSV generado: {fichero}")
 
-    print(f"Resultados guardados en: {fichero}")
+    except PermissionError:
+        print("\n[ERROR] Archivo abierto, no se puede escribir.")
+        logger.error(f"No se puede escribir en {fichero}")
         
 if __name__ == "__main__":
     os.makedirs(DATA_SCRAPPING, exist_ok=True)
-    # Cargar URLs
-    urls = cargar_urls(FICHERO_URLS)
 
+    urls = cargar_urls(FICHERO_URLS)
     if MAX_URLS:
         urls = urls[:MAX_URLS]
-        print(f"  → Modo prueba: procesando solo las primeras {MAX_URLS} URLs")
 
     urls_pdfs = cargar_pdfs(FICHERO_URLS_PDFS)
     if MAX_URLS:
         urls_pdfs = urls_pdfs[:MAX_URLS]
-    total = len(urls)
+
+    total      = len(urls)
     total_pdfs = len(urls_pdfs)
-    print(f"\nIniciando scraping de {total} páginas + {total_pdfs} PDFs\n")
+
+    print(f"\nIniciando scraping de {total} páginas web + {total_pdfs} PDFs\n")
+    logger.info(f"Inicio scraping: {total} webs + {total_pdfs} PDFs")
 
     resultados = []
 
     for i, url in enumerate(urls, start=1):
         print(f"[{i}/{total}]", end=" ")
-
-        # Extraemos el contenido de la url
         resultados.append(extraer_contenido(url))
-
-        # Pausa para no saturar el servidor
         time.sleep(PAUSA_SEGUNDOS)
 
     for i, url in enumerate(urls_pdfs, start=1):
@@ -216,15 +245,22 @@ if __name__ == "__main__":
         resultados.append(extraer_contenido_pdf(url))
         time.sleep(PAUSA_SEGUNDOS)
 
-    # Guardamos todo en el CSV
     guardar_resultados(resultados, FICHERO_SALIDA)
 
-    # Resumen final
-    ok    = sum(1 for r in resultados if r["estado"] == 200)
+    ok    = sum(1 for r in resultados if r["estado_http"] == 200)
     error = (total + total_pdfs) - ok
+
     print(f"\n{'='*40}")
-    print(f"  Páginas OK:    {ok}")
-    print(f"  Páginas error: {error}")
-    print(f"  PDFs OK:       {total_pdfs}")
-    print(f"  Total:         {total + total_pdfs}")
+    print(f"  Páginas OK    : {ok}")
+    print(f"  Páginas error : {error}")
+    print(f"  Total         : {total + total_pdfs}")
     print(f"{'='*40}")
+
+    logger.info("="*40)
+    logger.info(f"Páginas OK    : {ok}")
+    logger.info(f"Páginas error : {error}")
+    logger.info(f"Total         : {total + total_pdfs}")
+    logger.info("="*40)
+
+    print("\nSiguiente paso: ejecutar preprocesamiento.py")
+    logger.info("Fin del scraping")
