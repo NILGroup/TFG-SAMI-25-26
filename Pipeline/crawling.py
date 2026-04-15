@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import json
 import time
 from collections import deque
+from urllib.parse import quote, urlsplit, urlunsplit
 import os
 
 BASE_URL = "https://educacion.ucm.es/"
@@ -15,6 +16,11 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 ARCHIVO_SALIDA_PAGINAS = os.path.join(OUTPUT_DIR, "crawling_result.json")
 ARCHIVO_SALIDA_PDFS    = os.path.join(OUTPUT_DIR, "crawling_pdfs.json")
 
+
+def normalizar_url(url: str) -> str:
+    partes = urlsplit(url)
+    path_encoded = quote(partes.path, safe="/:@!$&'()*+,;=")
+    return urlunsplit((partes.scheme, partes.netloc, path_encoded, partes.query, partes.fragment))
 
 def crawl_completo(url_semilla):
     cola = deque([url_semilla])
@@ -42,6 +48,7 @@ def crawl_completo(url_semilla):
 
             # --- Caso: la URL es directamente un PDF ---
             if url_actual.lower().endswith('.pdf'):
+                url_actual = normalizar_url(url_actual) 
                 if url_actual not in pdfs_encontrados:
                     pdfs_encontrados.add(url_actual)
                     resultado["pdfs"].append({
@@ -69,6 +76,7 @@ def crawl_completo(url_semilla):
                     or content_disposition.lower().endswith(".pdf'")
                 )
                 if es_pdf and url_actual not in pdfs_encontrados:
+                    url_actual = normalizar_url(url_actual) 
                     pdfs_encontrados.add(url_actual)
                     resultado["pdfs"].append({
                         "url": url_actual,
@@ -100,6 +108,7 @@ def crawl_completo(url_semilla):
                     continue
 
                 if enlace.lower().endswith('.pdf'):
+                    url_actual = normalizar_url(url_actual) 
                     if enlace not in pdfs_encontrados:
                         pdfs_encontrados.add(enlace)
                         resultado["pdfs"].append({
@@ -113,7 +122,7 @@ def crawl_completo(url_semilla):
                 if (enlace not in visitados
                         and not enlace.lower().endswith(extensiones_omitir)
                         and enlace not in cola):
-                    cola.append(enlace)
+                    cola.append(normalizar_url(enlace))
 
             time.sleep(0.1)
 

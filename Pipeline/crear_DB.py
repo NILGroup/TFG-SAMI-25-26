@@ -1,28 +1,23 @@
+#pip install langchain langchain-huggingface langchain-chroma chromadb sentence-transformers
 import os
 import csv
-import re
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
-CSV_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Data", "Scrapping", "resultados_scrapping.csv"))
-DB_PATH = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Data", "Scrapping", "chroma_db"))
+BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+CSV_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "resultados_preprocesados.csv"))
+DB_PATH  = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "chroma_db"))
 EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
-COLLECTION = "TFG_prueba"
+COLLECTION  = "TFG_prueba"
 
-def limpiar_texto(texto: str) -> str:
-    # Eliminar caracteres no imprimibles
-    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\n]', ' ', texto) 
-    # Colapsar espacios y saltos de linea múltiples
-    texto = re.sub(r' {2,}', ' ', texto)
-    texto = re.sub(r'\n{3,}', '\n\n', texto)
-    return texto.strip()
- 
+CHUNK_SIZE    = 1500
+CHUNK_OVERLAP = 250
 
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
-        raise FileNotFoundError(f"No se encontró el CSV en: {csv_path}")
+        raise FileNotFoundError(f"No se encontró el CSV en: {csv_path}, ejecuta primero preprocesamiento.py")
 
     csv.field_size_limit(10 * 1024 * 1024)  
     documents = []
@@ -30,15 +25,16 @@ def crear_DB(csv_path : str = CSV_PATH):
     with open(csv_path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            texto_principal = limpiar_texto(row.get("texto_principal", ""))
-            titulo = limpiar_texto(row.get("titulo", ""))
-            h1 = limpiar_texto(row.get("h1", ""))
-            h2s = limpiar_texto(row.get("h2s", ""))
-            url = row.get("url", "").strip()
 
-            if len(texto_principal) < 30:
+            if row.get("valido", "True").strip().lower() != "true":
                 filas_omitidas += 1
                 continue
+            #Se extrae el texto principal, titulo, h1, h2s y url de cada fila del csv
+            texto_principal = row.get("texto_principal", "").strip()
+            titulo = row.get("titulo", "").strip()
+            h1 = row.get("h1", "").strip()
+            h2s = row.get("h2s", "").strip()
+            url = row.get("url", "").strip()
 
             partes = []
             if titulo:
@@ -51,25 +47,32 @@ def crear_DB(csv_path : str = CSV_PATH):
 
             documents.append(Document(
                 page_content="\n\n".join(partes),
-                metadata={"url": url, "titulo":titulo, "h1":h1},
+                metadata={"url": url, "titulo": titulo, "h1": h1},
             ))
+
     
     if not documents:
         raise ValueError("No se encontraron documentos válidos en el CSV.")
 
-    # se divide el documento en chunks de tamaño 1000 y teniendo en común las últimas 300 palabras de uno con
-    # las primeras del siguiente
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=3500, chunk_overlap=600)
+    print(f"Documentos cargados   : {len(documents)}")
+    print(f"Documentos omitidos   : {filas_omitidas}")
+
+    # Se divide el documento en chunks respetando el limite de tokens del modelo de embeddings
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+    )
     docs = text_splitter.split_documents(documents)
 
     for doc in docs:
-        titulo = doc.metadata.get("titulo", "")
-        h1 = doc.metadata.get("h1", "")
-        if titulo or h1:
-            doc.page_content = f"[Fuente: {titulo} | {h1}]\n\n" + doc.page_content
+        aux_titulo = doc.metadata.get("titulo", "")
+        aux_h1 = doc.metadata.get("h1", "")
+        if aux_titulo or aux_h1:
+            doc.page_content = f"[Fuente: {aux_titulo} | {aux_h1} ]\n\n" + doc.page_content
 
     os.makedirs(DB_PATH, exist_ok=True)
 
+    print(f"Generando embeddings con: {EMBED_MODEL}")
     embed_model = HuggingFaceEmbeddings(
     model_name=EMBED_MODEL,
     encode_kwargs={"normalize_embeddings": True}

@@ -7,7 +7,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.retrievers import BM25Retriever
 from langchain_chroma import Chroma
 from sentence_transformers import CrossEncoder
-from Pipeline.processing import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
+from Pipeline.crear_DB import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
 from loguru import logger
 import time
 import numpy as np

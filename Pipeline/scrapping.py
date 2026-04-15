@@ -7,8 +7,9 @@ import requests # libreria para hacer peticiones HTTP
 from bs4 import BeautifulSoup # libreria para parsear el HTML de cada pagina
 import pypdf # libreria para extraer texto de PDFs
 import io # libreria para leer el PDF en memoria sin guardarlo en disco
-from datetime import datetime, timezone
-import logging
+from datetime import datetime, timezone # libreria para manejar fechas en formato ISO 8601
+from urllib.parse import quote, urlsplit, urlunsplit  # para manejar URLs
+import logging # libreria para manejar logs de errores y eventos importantes
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
@@ -19,7 +20,7 @@ FICHERO_URLS = os.path.join(DATA_CRAWLING,  "crawling_result.json")
 FICHERO_URLS_PDFS = os.path.join(DATA_CRAWLING,  "crawling_pdfs.json")
 FICHERO_SALIDA = os.path.join(DATA_SCRAPPING, "resultados_scrapping.csv")
 PAUSA_SEGUNDOS = 1.5
-MAX_URLS = 30 # Para probar funcionamiento de manera rapida, limitar a un numero (20 p.e.).
+MAX_URLS = None # Para probar funcionamiento de manera rapida, limitar a un numero (20 p.e.).
 
 HEADERS = {
     "User-Agent": (
@@ -38,16 +39,13 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
     handlers=[
-        logging.FileHandler(LOG_FILE, encoding="utf-8"),
-        logging.StreamHandler()
-    ]
+logging.FileHandler(LOG_FILE, encoding="utf-8")]
 )
 
 logger = logging.getLogger(__name__)
 
 def _ahora_iso8601() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 def _fila_error(url: str, tipo: str, estado) -> dict:
     return {

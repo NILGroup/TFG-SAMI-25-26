@@ -40,7 +40,7 @@ def eliminar_breadcrumbs(texto: str) -> str:
         '',
         texto
     ).strip()
- 
+  
     # Patron 2: prefijo "UCM Directo" en paginas /directo/
     texto = re.sub(r'^UCM Directo\s+', '', texto).strip()
  
