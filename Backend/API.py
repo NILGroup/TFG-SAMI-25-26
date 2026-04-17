@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from RAG import pregunta_a_RAG, crear_RAG
+from RAG import pregunta_a_RAG, crear_RAG, model
 
 
 @asynccontextmanager
@@ -42,6 +42,8 @@ class Pregunta(BaseModel):
 class Respuesta(BaseModel):
     respuesta: str
 
+class TextoResumen(BaseModel):
+    texto: str
 
 @app.get("/")
 def saludo():
@@ -51,4 +53,12 @@ def saludo():
 @app.post("/pregunta")
 async def preguntar(data: Pregunta):
     respuesta = pregunta_a_RAG(data.pregunta)
+    return Respuesta(respuesta=respuesta)
+
+@app.post("/resumir")
+async def resumir(data: TextoResumen):
+    prompt = f""" Resume el siguiente texto de forma concisa, manteniendo los puntos más importantes. Responde en español. 
+        Texto: {data.texto}
+        Resumen:"""
+    respuesta = model.invoke(prompt)
     return Respuesta(respuesta=respuesta)
