@@ -5,7 +5,7 @@ import re
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 DATA_SCRAPPING = os.path.join(BASE_DIR, "Data", "Scrapping")
  
-CSV_ENTRADA = os.path.join(DATA_SCRAPPING, "resultados_scrapping_raw.csv")
+CSV_ENTRADA = os.path.join(DATA_SCRAPPING, "resultados_scrapping.csv")
 CSV_SALIDA  = os.path.join(DATA_SCRAPPING, "resultados_preprocesados.csv")
 
 MIN_PALABRAS = 30
@@ -47,7 +47,7 @@ def eliminar_breadcrumbs(texto: str) -> str:
     return texto
 
 def normalizar_texto(texto: str) -> str:
-    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\n]', ' ', texto)
+    texto = re.sub(r'[^\x20-\x7EáéíóúÁÉÍÓÚñÑüÜ¿¡.,;:()\-\–\n]', ' ', texto)
     texto = re.sub(r' {2,}', ' ', texto)
     texto = re.sub(r'\n{3,}', '\n\n', texto)
     return texto.strip()

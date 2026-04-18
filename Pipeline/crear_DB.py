@@ -5,12 +5,13 @@ from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
+import chromadb
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 CSV_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "resultados_preprocesados.csv"))
-DB_PATH  = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "chroma_db"))
+DB_PATH  = os.path.normpath(os.path.join(BASE_DIR, "Data", "Chroma", "chroma_db"))
 EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
-COLLECTION  = "TFG_prueba"
+COLLECTION  = "TFG_SAMI"
 
 CHUNK_SIZE    = 1500
 CHUNK_OVERLAP = 250
@@ -90,3 +91,10 @@ if __name__ == "__main__":
     print(f"CSV de entrada : {CSV_PATH}")
     print(f"Base de datos  : {DB_PATH}")
     crear_DB()
+    
+    # Debug con las constantes reales del script
+    client = chromadb.PersistentClient(path=DB_PATH)
+    print(client.list_collections())
+
+    col = client.get_collection(COLLECTION)  # "TFG_SAMI"
+    print(f"Documentos en la colección: {col.count()}")

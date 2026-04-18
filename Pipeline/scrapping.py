@@ -9,7 +9,6 @@ import pypdf # libreria para extraer texto de PDFs
 import io # libreria para leer el PDF en memoria sin guardarlo en disco
 from datetime import datetime, timezone # libreria para manejar fechas en formato ISO 8601
 from urllib.parse import quote, urlsplit, urlunsplit  # para manejar URLs
-import logging # libreria para manejar logs de errores y eventos importantes
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
@@ -29,20 +28,6 @@ HEADERS = {
         "Chrome/120.0.0.0 Safari/537.36"
     )
 }
-
-LOGS_DIR = os.path.join(BASE_DIR, "Logs")
-os.makedirs(LOGS_DIR, exist_ok=True)
-
-LOG_FILE = os.path.join(LOGS_DIR, "scrapping.log")
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-    handlers=[
-logging.FileHandler(LOG_FILE, encoding="utf-8")]
-)
-
-logger = logging.getLogger(__name__)
 
 def _ahora_iso8601() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -65,7 +50,6 @@ def cargar_urls(fichero: str) -> list:
         datos = json.load(f)
     urls = list({item["url"] for item in datos})
     print(f"Total URLs únicas cargadas: {len(urls)}")
-    logger.info(f"URLs cargadas: {len(urls)}")
     return urls
 
 def cargar_pdfs(fichero: str) -> list:
@@ -74,11 +58,9 @@ def cargar_pdfs(fichero: str) -> list:
             datos = json.load(f)
         urls = list({item["url"] for item in datos})
         print(f"Total PDFs únicos cargados: {len(urls)}")
-        logger.info(f"PDFs cargados: {len(urls)}")
         return urls
     except FileNotFoundError:
         print("crawling_pdfs.json no encontrado, se omiten los PDFs.")
-        logger.warning("crawling_pdfs.json no encontrado")
         return []
     
 #Funcion para extraer el contenido de una pagina dada su URL
@@ -89,7 +71,6 @@ def extraer_contenido(url: str) -> dict:
 
         if respuesta.status_code != 200:
             print(f"  [HTTP {respuesta.status_code}] {url}")
-            logger.warning(f"[WEB][HTTP {respuesta.status_code}] {url}")
             return _fila_error(url, "web", respuesta.status_code)
 
         soup = BeautifulSoup(respuesta.text, "html.parser")
@@ -114,7 +95,6 @@ def extraer_contenido(url: str) -> dict:
         texto = contenedor.get_text(separator=" ", strip=True) if contenedor else ""
 
         print(f"  [OK] {url[:80]}")
-        logger.info(f"[WEB][OK] {url}")
 
         return {
             "url":              url,
@@ -129,17 +109,14 @@ def extraer_contenido(url: str) -> dict:
 
     except requests.exceptions.Timeout:
         print(f"  [TIMEOUT] {url}")
-        logger.error(f"[WEB][TIMEOUT] {url}")
         return _fila_error(url, "web", "Timeout")
 
     except requests.exceptions.ConnectionError:
         print(f"  [CONNECTION ERROR] {url}")
-        logger.error(f"[WEB][CONNECTION ERROR] {url}")
         return _fila_error(url, "web", "Connection Error")
 
     except Exception as e:
         print(f"  [ERROR] {url} — {e}")
-        logger.exception(f"[WEB][ERROR] {url}")
         return _fila_error(url, "web", "Error inesperado")
     
 def extraer_contenido_pdf(url: str) -> dict:
@@ -158,11 +135,9 @@ def extraer_contenido_pdf(url: str) -> dict:
 
         if not es_pdf:
             print(f"  [AVISO] Content-Type inesperado ({content_type}): {url[:70]}")
-            logger.warning(f"[PDF][CONTENT-TYPE] {content_type} | {url}")
 
         if respuesta.status_code != 200:
             print(f"  [HTTP {respuesta.status_code}] {url}")
-            logger.warning(f"[PDF][HTTP {respuesta.status_code}] {url}")
             return _fila_error(url, "pdf", respuesta.status_code)
 
         pdf = pypdf.PdfReader(io.BytesIO(respuesta.content))
@@ -171,7 +146,6 @@ def extraer_contenido_pdf(url: str) -> dict:
         titulo_raw = (pdf.metadata.title if pdf.metadata else None) or ""
 
         print(f"  [OK PDF] {url[:80]}")
-        logger.info(f"[PDF][OK] {url}")
 
         return {
             "url":              url,
@@ -186,7 +160,6 @@ def extraer_contenido_pdf(url: str) -> dict:
 
     except Exception as e:
         print(f"  [ERROR PDF] {url} — {e}")
-        logger.exception(f"[PDF][ERROR] {url}")
         return _fila_error(url, "pdf", "Error inesperado")
     
 
@@ -208,11 +181,9 @@ def guardar_resultados(resultados: list, fichero: str) -> None:
             writer.writerows(resultados)
 
         print(f"\nResultados guardados en: {fichero}")
-        logger.info(f"CSV generado: {fichero}")
 
     except PermissionError:
         print("\n[ERROR] Archivo abierto, no se puede escribir.")
-        logger.error(f"No se puede escribir en {fichero}")
         
 if __name__ == "__main__":
     os.makedirs(DATA_SCRAPPING, exist_ok=True)
@@ -229,7 +200,6 @@ if __name__ == "__main__":
     total_pdfs = len(urls_pdfs)
 
     print(f"\nIniciando scraping de {total} páginas web + {total_pdfs} PDFs\n")
-    logger.info(f"Inicio scraping: {total} webs + {total_pdfs} PDFs")
 
     resultados = []
 
@@ -254,11 +224,4 @@ if __name__ == "__main__":
     print(f"  Total         : {total + total_pdfs}")
     print(f"{'='*40}")
 
-    logger.info("="*40)
-    logger.info(f"Páginas OK    : {ok}")
-    logger.info(f"Páginas error : {error}")
-    logger.info(f"Total         : {total + total_pdfs}")
-    logger.info("="*40)
-
     print("\nSiguiente paso: ejecutar preprocesamiento.py")
-    logger.info("Fin del scraping")

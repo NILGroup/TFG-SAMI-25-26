@@ -1,5 +1,8 @@
 # pip install langchain langchain-community langchain-ollama langchain-chroma pymupdf beautifulsoup4 sentence-transformers rank_bm25 langchain-huggingface transformers loguru
+import sys
 import os
+sys.path.insert(0, os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")))
+
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.documents import Document
@@ -7,10 +10,11 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.retrievers import BM25Retriever
 from langchain_chroma import Chroma
 from sentence_transformers import CrossEncoder
-from Pipeline.crear_DB import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
 from loguru import logger
 import time
 import numpy as np
+from Pipeline.crear_DB import crear_DB, DB_PATH, COLLECTION, EMBED_MODEL
+
 
 logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
            format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}")
@@ -67,7 +71,7 @@ def crear_RAG():
 
     reranker = CrossEncoder("amberoad/bert-multilingual-passage-reranking-msmarco")
 
-    raw = vector_store.get()
+    raw = vector_store._collection.get(include=["documents", "metadatas"])
     bm25_docs = [
         Document(page_content=text, metadata=meta)
         for text, meta in zip(raw["documents"], raw["metadatas"])
