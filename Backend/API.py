@@ -1,12 +1,11 @@
 # pip install fastapi uvicorn
 
-import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from RAG import pregunta_a_RAG, crear_RAG, model
-
+from RAG import pregunta_a_RAG, crear_RAG
+from Botones import boton_resumir, boton_reformular, boton_paso_a_paso
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -42,7 +41,7 @@ class Pregunta(BaseModel):
 class Respuesta(BaseModel):
     respuesta: str
 
-class TextoResumen(BaseModel):
+class Texto(BaseModel):
     texto: str
 
 @app.get("/")
@@ -56,9 +55,16 @@ async def preguntar(data: Pregunta):
     return Respuesta(respuesta=respuesta)
 
 @app.post("/resumir")
-async def resumir(data: TextoResumen):
-    prompt = f""" Resume el siguiente texto de forma concisa, manteniendo los puntos más importantes. Responde en español. 
-        Texto: {data.texto}
-        Resumen:"""
-    respuesta = model.invoke(prompt)
+async def resumir(data: Texto):
+    respuesta = boton_resumir(data.texto)
+    return Respuesta(respuesta=respuesta)
+
+@app.post("/reformular")
+async def reformular(data: Texto):
+    respuesta = boton_reformular(data.texto)
+    return Respuesta(respuesta=respuesta)
+
+@app.post("/paso-a-paso")
+async def paso_a_paso(data: Texto):
+    respuesta = boton_paso_a_paso(data.texto)
     return Respuesta(respuesta=respuesta)
