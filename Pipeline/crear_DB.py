@@ -14,7 +14,7 @@ EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
 COLLECTION  = "TFG_SAMI"
 
 CHUNK_SIZE    = 1500
-CHUNK_OVERLAP = 250
+CHUNK_OVERLAP = 600
 
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):

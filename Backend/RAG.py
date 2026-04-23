@@ -24,32 +24,22 @@ reranker = None
 #usar el modelo que quieras de Ollama, mirar cuales tienes instalado: ollama list, descargar nuevo ollama pull llama3.2
 model = OllamaLLM(model="qwen3.5")
 
-# def generar_queries(pregunta: str):
-#     logger.debug(f"Generando queries adicionales para: '{pregunta}'")
-#     t0 = time.time()
-#
-#     prompt_multiquery = f"""
-#     Genera 3 reformulaciones diferentes de la siguiente pregunta
-#     para buscar información en una base de conocimiento.
-#     Mantén los términos específicos como nombres de grados, facultades y universidades.
-#
-#     Pregunta: {pregunta}
-#
-#     Devuelve solo las preguntas en español, una por línea. No hagas ninguna linea introductoria.
-#     """
-#
-#     respuesta = model.invoke(prompt_multiquery)
-#
-#     queries = [q.strip() for q in respuesta.split("\n") if q.strip()]
-#     queries = [q for q in queries if q.endswith("?")]
-#     todas = [pregunta] + queries
-#
-#     elapsed = time.time() - t0
-#     queries_formateadas = "\n".join(f"    [{i+1}] {q}" for i, q in enumerate(todas))
-#     logger.debug(
-#         f"Queries generadas en {elapsed:.2f}s ({len(todas)} en total):\n{queries_formateadas}"
-#     )
-#     return todas
+def get_all_documents_in_batches(collection, batch_size=5000):
+    all_documents = []
+    all_metadatas = []
+    offset = 0
+    while True:
+        batch = collection.get(
+            include=["documents", "metadatas"],
+            limit=batch_size,
+            offset=offset
+        )
+        if not batch["documents"]:
+            break
+        all_documents.extend(batch["documents"])
+        all_metadatas.extend(batch["metadatas"])
+        offset += batch_size
+    return all_documents, all_metadatas
 
 def crear_RAG():
     global RAG
@@ -69,12 +59,12 @@ def crear_RAG():
     # K es el número de chunks que se añaden al contexto
     retriever = vector_store.as_retriever(search_kwargs={'k': 10})
 
-    reranker = CrossEncoder("amberoad/bert-multilingual-passage-reranking-msmarco")
+    reranker = CrossEncoder("cross-encoder/mmarco-mMiniLMv2-L12-H384-v1")
 
-    raw = vector_store._collection.get(include=["documents", "metadatas"])
+    all_docs, all_metas = get_all_documents_in_batches(vector_store._collection)
     bm25_docs = [
         Document(page_content=text, metadata=meta)
-        for text, meta in zip(raw["documents"], raw["metadatas"])
+        for text, meta in zip(all_docs, all_metas)
     ]
     bm25_retriever = BM25Retriever.from_documents(bm25_docs)
 
@@ -110,6 +100,13 @@ def crear_RAG():
             zip(puntuaciones, docs_unicos),
             key=lambda x: x[0],
             reverse=True
+        )
+
+        for i, (puntuacion, doc) in enumerate(docs_ordenados[:7]):
+            logger.debug(
+            f"--- Fragmento #{i+1} (score: {puntuacion:.4f}) ---\n"
+            f"{doc.page_content}\n"
+            f"{'='*60}"
         )
 
         # Loguea TODOS los fragmentos con su puntuación
