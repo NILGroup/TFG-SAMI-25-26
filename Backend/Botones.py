@@ -14,12 +14,15 @@ def boton_reformular(texto: str) -> str:
     return model.invoke(prompt)    
 
 def boton_paso_a_paso(texto: str) -> str:
-    prompt = f"""Explica la siguiente información paso a paso, de forma clara y ordenada.
-        Piensa en cada paso antes de escribirlo y asegúrate de que la secuencia sea lógica.
-        Responde en español.
-    
-        Información: {texto}
-    
-        Vamos paso a paso:
+    prompt = f"""Explica la siguiente información siguiendo un razonamiento paso a paso.
+
+        Primero, analiza la información.
+        Después, descompónla en pasos lógicos.
+        Finalmente, presenta los pasos numerados de forma clara.
+
+        Información:
+        {texto}
+
+        Respuesta final:
         Paso 1:"""
     return model.invoke(prompt)
