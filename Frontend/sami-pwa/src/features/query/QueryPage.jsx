@@ -1,69 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useHistorialStore } from '../../store/useChatStore';
+import { useState, useEffect } from 'react';
 import { useAccessibilityStore } from '../../store/useAccessibilityStore';
-import { preguntarAlRAG } from '../../services/api';
+import { preguntarAlRAG, getFaqs, getHistorial } from '../../services/api';
 import './QueryPage.css';
 
-
-const FAQS_POR_CATEGORIA = {
-    academico: [
-        {
-            pregunta: '¿Cómo accedo al campus virtual?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cuándo son los exámenes finales en la facultad de Educación?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cómo puedo ponerme en contacto con un profesor de una asignatura?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        }
-    ],
-    administrativo: [
-        {
-            pregunta: '¿Qué becas y/o ayudas económicas puedo pedir?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cuándo abre el plazo de matrícula en la Facultad de Educación?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cómo puedo aportar nueva documentación a la universidad?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-    ],
-    biblioteca: [
-        {
-            pregunta: '¿Cómo renuevo el préstamo de un libro?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cómo reservo una sala en la biblioteca?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Qué horarios tiene la biblioteca de la facultad de Educación?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        }
-    ],
-    servicios: [
-        {
-            pregunta: '¿Cómo accedo al campus virtual?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cómo accedo al campus virtual?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            pregunta: '¿Cómo accedo al campus virtual?',
-            respuesta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        }
-    ]
-};
 
 export const QueryPage = () => {
     const { categoryId } = useParams();
@@ -75,30 +15,30 @@ export const QueryPage = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [faqs, setFaqs] = useState({ globales: [], personales: [] });
+    const [historial, setHistorial] = useState([]);
+    const HistorialSuficiente = historial.length >= 5;
 
-    const { addPregunta, getPreguntas } = useHistorialStore();
-    const preguntasRecientes = getPreguntas(categoryId);
+    useEffect(() => {
+        getFaqs(categoryId)
+            .then(setFaqs)
+            .catch(() => {}); // si falla, no se muestran
 
-    const faqs = FAQS_POR_CATEGORIA[categoryId] || [];
+        getHistorial(categoryId)
+            .then(setHistorial)
+            .catch(() => {});
+    }, [categoryId]);
 
-    const handleSearch = async (text, respuestaDirecta = null) => {
+    const handleSearch = async (text) => {
         const query = text || question;
         if (!query.trim()) return;
 
         setQuestion(query);
-
-        if (respuestaDirecta !== null) {
-            setAnswer(respuestaDirecta);
-            setIsSubmitted(true);
-            return;
-        }
-
-        addPregunta(categoryId, query);
         setIsLoading(true);
         setError(null);
 
         try {
-            const respuesta = await preguntarAlRAG(query);
+            const respuesta = await preguntarAlRAG(query, categoryId);
             setAnswer(respuesta);
             setIsSubmitted(true);
         } catch (e) {
@@ -120,35 +60,56 @@ export const QueryPage = () => {
                     <h2 className="category-title">Asistente: {categoryId}</h2>
                     <div className="interaction-box">
 
-                        {preguntasRecientes.length > 0 && (
+                {HistorialSuficiente ? (
+                    <>
+                        <div>
+                            <p className="historial-title">Tus consultas recientes:</p>
+                            <div className="historial-container">
+                                {historial.map((item) => (
+                                    <button
+                                        key={`historial-${item.timestamp}`}
+                                        className="historial-btn"
+                                        onClick={() => handleSearch(item.query)}
+                                    >
+                                        {item.query}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {faqs.personales.length > 0 && (
                             <div>
-                                <p className="historial-title">Tus consultas recientes:</p>
-                                <div className="historial-container">
-                                    {preguntasRecientes.map((p) => (
+                                <p className="instruction-text">Tus preguntas frecuentes:</p>
+                                <div className="faqs-container">
+                                    {faqs.personales.map((faq, index) => (
                                         <button
-                                            key={p}
-                                            className="historial-btn"
-                                            onClick={() => handleSearch(p)}
+                                            key={`personal-${index}-${faq}`}
+                                            className="faq-button"
+                                            onClick={() => handleSearch(faq)}
                                         >
-                                            {p}
+                                            {faq}
                                         </button>
                                     ))}
                                 </div>
                             </div>
                         )}
-
+                    </>
+                ) : (
+                    <div>
                         <p className="instruction-text">Preguntas frecuentes:</p>
                         <div className="faqs-container">
-                            {faqs.map((faq) => (
+                            {faqs.globales.map((faq, index) => (
                                 <button
-                                    key={faq.pregunta}
+                                    key={`global-${index}-${faq}`}
                                     className="faq-button"
-                                    onClick={() => handleSearch(faq.pregunta, faq.respuesta)}
+                                    onClick={() => handleSearch(faq)}
                                 >
-                                    {faq.pregunta}
+                                    {faq}
                                 </button>
                             ))}
                         </div>
+                    </div>
+                )}
 
                         <div className="input-group">
                             <input
@@ -156,7 +117,7 @@ export const QueryPage = () => {
                                 value={question}
                                 onChange={(e) => setQuestion(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                placeholder="Escribe aquí..."
+                                placeholder="Escribe aquí tu pregunta..."
                             />
                             <button
                                 className="search-confirm-btn"
