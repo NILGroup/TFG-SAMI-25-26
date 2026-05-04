@@ -17,7 +17,6 @@ export const QueryPage = () => {
     const [error, setError] = useState(null);
     const [faqs, setFaqs] = useState({ globales: [], personales: [] });
     const [historial, setHistorial] = useState([]);
-    const HistorialSuficiente = historial.length >= 5;
 
     useEffect(() => {
         getFaqs(categoryId)
@@ -76,40 +75,38 @@ export const QueryPage = () => {
                     <h2 className="category-title">Asistente: {categoryId}</h2>
                     <div className="interaction-box">
 
-                        {HistorialSuficiente ? (
-                            <>
-                                <div>
-                                    <p className="historial-title">Tus consultas recientes:</p>
-                                    <div className="historial-container">
-                                        {historial.map((item) => (
-                                            <button
-                                                key={`historial-${item.timestamp}`}
-                                                className="historial-btn"
-                                                onClick={() => handleSearch(item.query)}
-                                            >
-                                                {item.query}
-                                            </button>
-                                        ))}
-                                    </div>
+                        {historial.length > 0 && (
+                            <div>
+                                <p className="historial-title">Tus consultas recientes:</p>
+                                <div className="historial-container">
+                                    {historial.map((item) => (
+                                        <button
+                                            key={`historial-${item.timestamp}`}
+                                            className="historial-btn"
+                                            onClick={() => handleSearch(item.query)}
+                                        >
+                                            {item.query}
+                                        </button>
+                                    ))}
                                 </div>
+                            </div>
+                        )}
 
-                                {faqs.personales.length > 0 && (
-                                    <div>
-                                        <p className="instruction-text">Tus preguntas frecuentes:</p>
-                                        <div className="faqs-container">
-                                            {faqs.personales.map((faq, index) => (
-                                                <button
-                                                    key={`personal-${index}-${faq}`}
-                                                    className="faq-button"
-                                                    onClick={() => handleSearch(faq)}
-                                                >
-                                                    {faq}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </>
+                        {historial.length >= 5 ? (
+                            <div>
+                                <p className="instruction-text">Tus preguntas frecuentes:</p>
+                                <div className="faqs-container">
+                                    {faqs.personales.map((faq, index) => (
+                                        <button
+                                            key={`personal-${index}-${faq}`}
+                                            className="faq-button"
+                                            onClick={() => handleSearch(faq)}
+                                        >
+                                            {faq}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
                         ) : (
                             <div>
                                 <p className="instruction-text">Preguntas frecuentes:</p>
