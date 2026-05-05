@@ -22,7 +22,7 @@ logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
 RAG = None
 reranker = None
 #usar el modelo que quieras de Ollama, mirar cuales tienes instalado: ollama list, descargar nuevo ollama pull qwen3.5
-model = OllamaLLM(model="qwen3.5")
+model = OllamaLLM(model="llama3.2")
 
 def get_all_documents_in_batches(collection, batch_size=5000):
     all_documents = []
