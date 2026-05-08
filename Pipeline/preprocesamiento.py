@@ -8,7 +8,7 @@ DATA_SCRAPPING = os.path.join(BASE_DIR, "Data", "Scrapping")
 CSV_ENTRADA = os.path.join(DATA_SCRAPPING, "resultados_scrapping.csv")
 CSV_SALIDA  = os.path.join(DATA_SCRAPPING, "resultados_preprocesados.csv")
 
-MIN_PALABRAS = 30
+MIN_PALABRAS = 10
 
 def limpiar_bom(texto: str) -> str:
     # Eliminar el BOM si está presente

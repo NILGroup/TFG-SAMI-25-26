@@ -9,12 +9,12 @@ import chromadb
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 CSV_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "resultados_preprocesados.csv"))
-DB_PATH  = os.path.normpath(os.path.join(BASE_DIR, "Data", "Chroma", "chroma_db"))
+DB_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Chroma", "chroma_db"))
 EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
-COLLECTION  = "TFG_SAMI"
+COLLECTION = "TFG_SAMI"
 
-CHUNK_SIZE    = 1500
-CHUNK_OVERLAP = 600
+CHUNK_SIZE = 512
+CHUNK_OVERLAP = 82
 
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
