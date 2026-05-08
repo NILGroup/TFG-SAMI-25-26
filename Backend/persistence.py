@@ -46,8 +46,8 @@ def log_conversation(user_id: str, category: str, query: str, answer: str):
             (user_id, category, query.strip(), normalize(query), answer.strip(), datetime.now().isoformat()),)
         conexion.commit()
 
-#Recogemos las 20 últimas interacciones del usuario
-def get_history(user_id: str, category: str, limit: int = 20) -> list[dict]:
+#Recogemos las 7 últimas interacciones del usuario para formar el historial
+def get_history(user_id: str, category: str, limit: int = 7) -> list[dict]:
     with sqlite3.connect(DB_PATH) as conexion:
         rows = conexion.execute("""
             SELECT query, answer, timestamp FROM conversations
