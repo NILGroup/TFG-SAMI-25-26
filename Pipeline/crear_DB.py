@@ -37,6 +37,14 @@ def crear_DB(csv_path : str = CSV_PATH):
             h2s = row.get("h2s", "").strip()
             url = row.get("url", "").strip()
 
+            # TITULOS_GENERICOS = {
+            #     "Facultad de Educación - Centro de Formación del Profesorado.",
+            # }
+            # if titulo and titulo not in TITULOS_GENERICOS:
+            #     texto_principal = f"{titulo}. {texto_principal}"
+            # elif h2s and len(h2s.split()) <= 5:
+            #     texto_principal = f"{h2s}. {texto_principal}"
+
             partes = []
             if titulo:
                 partes.append(f"Titulo: {titulo}")

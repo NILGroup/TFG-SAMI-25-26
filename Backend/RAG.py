@@ -29,7 +29,8 @@ def generar_queries(pregunta: str):
     t0 = time.time()
 
     prompt_multiquery = f"""
-    Eres SAMI, el asistente virtual de la Facultad de Educación de la Universidad Complutense de Madrid, cuyas siglas significan Sistema Accesible para la Mejora de la Inclusividad, diseñada para ayudar a los estudiantes del programa ACCEDE y al resto del alumnado a resolver dudas sobre la vida universitaria.
+    Eres SAMI, el asistente virtual de la Facultad de Educación de la Universidad Complutense de Madrid, cuyas siglas significan Sistema Accesible para la Mejora de la 
+    Inclusividad, diseñada para ayudar a los estudiantes del programa ACCEDE y al resto del alumnado a resolver dudas sobre la vida universitaria.
     Genera 3 reformulaciones diferentes de la siguiente pregunta para buscar información en una base de conocimiento.
     Mantén los términos específicos como nombres de grados, facultades y universidades.
 
@@ -88,14 +89,14 @@ def crear_RAG():
 
     reranker = CrossEncoder("cross-encoder/mmarco-mMiniLMv2-L12-H384-v1")
 
-    # all_docs, all_metas = get_all_documents_in_batches(vector_store._collection)
-    # bm25_docs = [
-    #    Document(page_content=text, metadata=meta)
-    #    for text, meta in zip(all_docs, all_metas)
-    # ]
-    # bm25_retriever = BM25Retriever.from_documents(bm25_docs)
+    all_docs, all_metas = get_all_documents_in_batches(vector_store._collection)
+    bm25_docs = [
+       Document(page_content=text, metadata=meta)
+       for text, meta in zip(all_docs, all_metas)
+    ]
+    bm25_retriever = BM25Retriever.from_documents(bm25_docs)
 
-    # bm25_retriever.k = 10
+    bm25_retriever.k = 10
 
     def retrieve_and_rerank(pregunta: str):
         logger.debug(f"[Retrieve & Rerank] Pregunta recibida: '{pregunta}'")
@@ -104,10 +105,10 @@ def crear_RAG():
         #Hybrid retrieval: vectorial + BM25
         # t_retrieval = time.time()
         # vector_docs = retriever.invoke(pregunta)
-        # bm25_docs = bm25_retriever.invoke(pregunta)
-        # docs = vector_docs + bm25_docs
+        # bm25_results = bm25_retriever.invoke(pregunta)
+        # docs = vector_docs + bm25_results
         # logger.debug(
-        #    f"Docs recuperados — vectorial: {len(vector_docs)}, BM25: {len(bm25_docs)} "
+        #    f"Docs recuperados — vectorial: {len(vector_docs)}, BM25: {len(bm25_results)} "
         #    f"— {time.time() - t_retrieval:.2f}s"
         # )
 
