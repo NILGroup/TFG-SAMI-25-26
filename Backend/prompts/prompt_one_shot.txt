@@ -1,0 +1,237 @@
+
+<GUIDELINES>
+Sigue estrictamente las siguientes pautas para adaptar el texto a Lectura Fácil.
+No inventes información. No elimines información relevante.
+Prioriza siempre la claridad, la sencillez y la comprensión del lector.
+
+G01: Utiliza palabras sencillas y habituales. Evita palabras abstractas, muy largas o con sílabas difíciles.
+    - Por ejemplo: 
+    INCORRECTO: Pepa está la antepenúltima en la fila.
+    CORRECTO: Pepa está casi al final de la fila, tiene dos personas detrás.
+G02: Evita frases hechas, refranes, ironías y metáforas.
+    - Por ejemplo:
+    INCORRECTO: Ese libro cuesta un ojo de la cara.
+    CORRECTO: Ese libro es muy caro.
+G03: Si es necesario utilizar términos técnicos, abstractos o difíciles de entender (porque no hay alternativa sencilla) utiliza glosas y glosarios para explicarlas. El glosario debe explicar el significado de cada término con palabras sencillas.
+    - Por ejemplo:
+    INCORRECTO: Todos los trabajadores tienen derecho a estar bien preparados e informados en la Prevención de Riesgos Laborales.
+    CORRECTO: Todos los trabajadores tienen derecho a estar bien preparados e informados en la Prevención de Riesgos Laborales.
+    Prevención de Riesgos Laborales: Medidas que intentan que los trabajadores estén preparados para evitar peligros, problemas y accidentes en su trabajo. Un trabajador está seguro en su trabajo cuando está preparado e informado.
+G04: Si usas palabras con varios significados o que suenen igual que otra palabra, asegúrate de que el contexto las explique o añade una aclaración.
+    - Por ejemplo: 
+    INCORRECTO: Juan coloca la maleta en la baca. 
+    CORRECTO: Juan coloca la maleta en la baca del coche.
+G05: Evita los adverbios que terminan en -mente.
+    - Por ejemplo:
+    INCORRECTO: Él habla claramente.
+    CORRECTO: Él habla muy claro.
+G06: Se deben evitar los superlativos (-ísimo).
+G07: Evita el uso de palabras que provienen de otros idiomas a menos que su uso sea muy común y no exista una alternativa clara en español.
+    - Por ejemplo:
+    INCORRECTO: Remake.
+    CORRECTO: Wifi.
+G08: Evita las abreviaturas.
+    - Por ejemplo:
+    INCORRECTO: Luis vive en la Avda. de Europa.
+    CORRECTO: Luis vive en la Avenida de Europa.
+G09: Evita las siglas. Se pueden utilizar siglas muy conocidas, pero en este caso tienes que explicarlas la primera vez que se utilicen. 
+    - Por ejemplo:
+    INCORRECTO: Mañana voy a la ONU.
+    CORRECTO: Mañana voy a la ONU. La ONU es la Organización de Naciones Unidas.
+G10: Utiliza la misma palabra para denominar al mismo objeto o referente en todo el documento.
+    - Por ejemplo:
+    INCORRECTO: Lola tiene que rellenar una solicitud para hacer la obra. El formulario está en la página web del Ayuntamiento.
+    CORRECTO: Lola tiene que rellenar una solicitud para hacer la obra. La solicitud está en la página web del Ayuntamiento.
+G11: Evita las palabras que tienen un significado indeterminado.
+    - Por ejemplo: 
+    INCORRECTO: Yo tengo que hacer una cosa antes de irme.
+    CORRECTO: Yo tengo que hacer una llamada antes de irme.
+G12: Escribe los números en cifras. No los escribas en letra.
+    - Por ejemplo:
+    INCORRECTO: Juan vive en la planta número dieciocho.
+    CORRECTO: Juan vive en la planta número 18.
+G13: Evita los números con muchos dígitos. Para cantidades muy grandes usa comparaciones sencillas o cualitativas relacionando el número con algo familiar para el lector o sustitúyelos por términos aproximados.
+    - Por ejemplo:
+    INCORRECTO: En España hay 1.234.567 personas con esta enfermedad.
+    CORRECTO: En España hay tantas personas con esta enfermedad como las que viven en Granada.
+G14: Evita los números ordinales. Tanto en cifra como en letra.
+    - Por ejemplo:
+    INCORRECTO: Juan vive en la planta 18ª.
+    CORRECTO: Juan vive en la planta número 18.
+G15: Evita las fracciones y los porcentajes.
+    - Por ejemplo:
+    INCORRECTO: Un medio.
+    CORRECTO: La mitad.
+G16: Evita los números romanos. En el caso de siglos, reyes y papas se debe poner el número romano e indicar cómo se lee.
+    - Por ejemplo:
+    INCORRECTO: El papa Benedicto XVI vive en Roma.
+    CORRECTO: El papa Benedicto XVI vive en Roma. Benedicto XVI se lee Benedicto décimosexto.
+G17: Separa los números de teléfono en bloques de dígitos más pequeños.
+    - Por ejemplo:
+    INCORRECTO: Llama al 915234678.
+    CORRECTO: Llama al 915 234 678.
+G18: Escribe las fechas completas usando el nombre del mes en lugar del número.
+G19: Evita escribir las horas en formato de 24 horas. Utiliza el formato de 12 horas y especifica si es "de la mañana", "de la tarde" o “de la noche".
+    - Por ejemplo:
+    INCORRECTO: 12:40
+    CORRECTO: 12 y 40 de la mañana.
+G20: Evita escribir palabras o frases enteras en mayúsculas. La única excepción son los acrónimos.
+    - Por ejemplo:
+    INCORRECTO: VENDEMOS CASAS.
+    CORRECTO: Vendemos casas.
+G21: Utiliza los dos puntos delante de una lista con más de tres elementos.
+    - Por ejemplo:
+    INCORRECTO: Hoy voy a salir con mi madre a comprar fruta, verdura, carne, pescado, conservas, pan, pasta de dientes y champú.
+    CORRECTO: Hoy voy a salir con mi madre a comprar:
+    - fruta,
+    - verdura,
+    - carne,
+    - pescado,
+    - conservas,
+    - pan,
+    - pasta de dientes, 
+    - champú.
+G22: Evita signos de puntuación raros, poco habituales o que interrumpan el flujo del texto (paréntesis, comillas, corchetes, /, &...). 
+    - Por ejemplo:
+    INCORRECTO: Pepe dijo: "No quiero volver más a esta casa".
+    CORRECTO: Pepe dijo que no quiere volver más a esta casa.
+G23: Evita usar el punto y coma (;). 
+G24: Evita usar puntos suspensivos (...).
+    - Por ejemplo:
+     INCORRECTO: Ana compró patatas, ajo, fruta...
+     CORRECTO: Ana compró patatas, ajo y fruta.
+G25: Para utilizar un lenguaje inclusivo y claro, repite el nombre y adjetivo en masculino y femenino o usa genéricos frecuentes que incluyen a hombres y mujeres. Evita la @ y la X para incluir ambos géneros.
+    - Por ejemplo:
+    INCORRECTO: Los abogados/as presentaron una denuncia.
+    CORRECTO: Las abogadas y los abogados presentaron una denuncia.
+G26: Evita la palabra etcétera. Puedes utilizar otras palabras.
+G27: Utiliza frases sencillas y cortas. 
+    - Por ejemplo:
+        INCORRECTO: Lola tiene que rellenar una solicitud de la página web del Ayuntamiento para hacer la obra.
+        CORRECTO: Lola tiene que rellenar una solicitud para hacer la obra. La solicitud está en la página web del Ayuntamiento.
+G28: Escribe una idea por frase. Si tienes que usar frases largas, corta la frase donde las personas se pararán a leerla.
+    - Por ejemplo:
+    INCORRECTO: Como ayer estaba lloviendo, Juan cogió el paraguas.
+    CORRECTO: Ayer estaba lloviendo. Por eso, Juan cogió el paraguas.
+G29: Cuidado con las órdenes. Asegúrate de que está claro a quién se dirigen.
+    - Por ejemplo:
+    INCORRECTO: Cierra la puerta.
+    CORRECTO: Manuel, cierra la puerta.
+G30: Deja claro sobre quién escribes. Utiliza palabras como tú, yo, ellos o el nombre propio.
+    - Por ejemplo:
+    INCORRECTO: Se enviará el formulario por correo electrónico.
+    CORRECTO: El ciudadano enviará el formulario por correo electrónico.
+G31: Utiliza verbos simples.
+    - Por ejemplo:
+    INCORRECTO: Juan adquirió 2 balones.
+    CORRECTO: Juan compró 2 balones.
+G32: Evita la voz pasiva. 
+    - Por ejemplo:
+    INCORRECTO: Se venden casas.
+    CORRECTO: Vendemos casas.
+G33: Evita los gerundios.
+    - Por ejemplo:
+    INCORRECTO: Jorge estaba cantando en su casa cuando sonó el timbre.
+    CORRECTO: Jorge cantaba en su casa y sonó el timbre.
+G34: Evita usar dos o más verbos seguidos. Excepto perífrasis con verbos modales sencillos (deber, querer, saber y poder).
+    - Por ejemplo:
+    INCORRECTO: La vecina quiere seguir viajando.
+    CORRECTO: La vecina quiere viajar más.
+G35: Usa frases positivas y evita las frases negativas.
+    - Por ejemplo:
+    INCORRECTO: No podrás marcharte antes del final de la reunión.
+    CORRECTO: Podrás marcharte cuando termine la reunión.
+G36: Evita dos frases negativas juntas.
+    - Por ejemplo:
+    INCORRECTO: No se admitirán las personas que no tengan certificado.
+    CORRECTO: Solo se admitirán las personas con certificado.
+G37: Evita las explicaciones entre comas, guiones o paréntesis.
+    - Por ejemplo:
+    INCORRECTO: María, enfermera de profesión, puso la vacuna.
+    CORRECTO: María es enfermera y puso la vacuna.
+G38: Evita utilizar elipsis u omisiones de palabras clave (sustantivos o verbos).
+    - Por ejemplo:
+    INCORRECTO: Juan compró 2 balones. Uno para él y otro para su sobrino.
+    CORRECTO: Juan compró 2 balones. Un balón es para él y el otro es para su sobrino.
+G39: Evita poner más información de la necesaria.
+    - Por ejemplo:
+    INCORRECTO: María sube las escaleras hacia arriba.
+    CORRECTO: María sube las escaleras.
+G40: Organiza la información en el tiempo. Explica primero lo que sucede al principio y sigue la historia en orden.
+    - Por ejemplo:
+    CORRECTO: Consuelo Berges nació en Ucieda.
+    A los 20 años se graduó como maestra
+    según la Institución Libre de Enseñanza.
+    Después empezó a dar clases
+    en la academia creada por la escritora Matilde de la Torre
+    en el pueblo de Cabezón de la Sal.
+    En Cabezón de la Sal empezó a escribir artículos de prensa. 
+    Sus artículos eran polémicos y atrevidos para la época. 
+    Por defender sus ideas tuvo que marcharse de España 
+    y también fue encarcelada.
+    En 1956 obtuvo el premio Fray Luis de León por la traducción del libro “Historia de España”
+    En los años 40 volvió a España y se dedicó a traducir libros
+G41: Dirige el texto directamente al lector utilizando la segunda persona (singular o plural) siempre que la frase requiera o describa una acción que el lector deba realizar.
+    - Por ejemplo:
+    INCORRECTO: Meter el pollo en el horno a 180°.
+    CORRECTO: Mete el pollo en el horno a 180 grados.
+G42: Pon junta la información sobre el mismo tema. Organiza los temas con espacios en blanco entre frases.
+    - Por ejemplo:
+    INCORRECTO: Las reglas son una lista de normas que ayudan a las personas
+    a hacer cosas de la misma forma y de la forma correcta.
+    Para hacer esto bien, debes seguir reglas.
+    Hacer buena información significa
+    hacer información fácil de leer y comprender.
+    CORRECTO: Hacer buena información significa
+    hacer información fácil de leer y comprender.
+    Para hacer esto bien, debes seguir reglas.
+    Las reglas son una lista de normas que ayudan a las personas
+    a hacer cosas de la misma forma y de la forma correcta.
+G43: Organiza las listas con viñetas.
+G44: Escribe los diálogos en estilo teatral, es decir, con un guion.
+    - Por ejemplo:
+    CORRECTO: Antonio y José iban a ir al parque:
+    Antonio - ¡Cómo llueve!
+    José - Llévate un paraguas.
+G45: Utiliza ejemplos para explicar las palabras difíciles.
+    - Por ejemplo:
+    CORRECTO: Reivindicar
+    Reclamar algo a lo que
+    se tiene derecho.
+    Por ejemplo:
+    las personas con discapacidad
+    reivindicaron su derecho a votar
+    durante muchos años.
+G46: Evita los condicionales.
+    - Por ejemplo:
+    INCORRECTO: Yo hubiera hecho el examen ayer si hubiera podido.
+    CORRECTO: Yo quise hacer el examen ayer, pero no pude.
+G47: Evita los subjuntivos.
+    - Por ejemplo:
+    INCORRECTO: Yo hubiera hecho el examen ayer si hubiera podido.
+    CORRECTO: Yo quise hacer el examen ayer, pero no pude.
+G48: Evita los tiempos verbales compuestos.
+    - Por ejemplo:
+    INCORRECTO: Juan ha comprado 2 balones.
+    CORRECTO: Juan compró 2 balones.
+G49: Evita usar el verbo en su forma de sustantivo.
+    - Por ejemplo:
+    INCORRECTO: El frotar se va a acabar.
+    CORRECTO: Ya no es necesario frotar.
+G50: Evita frases nominales.
+    - Por ejemplo:
+    INCORRECTO: La soledad sonora, primera novela de Elena Quiroga.
+    CORRECTO: La soledad sonora es la primera novela de Elena Quiroga.
+G51: Se debe evitar usar un adjetivo solo para referirte a un objeto.
+        - Por ejemplo:
+    INCORRECTO: Juan compró dos pantalones de colores distintos. El rojo es más bonito.
+    CORRECTO: Juan compró dos pantalones de colores distintos. El pantalón rojo es más bonito.
+G52: Utiliza el presente de indicativo siempre que sea posible.
+    - Por ejemplo:
+    INCORRECTO: En Santander se creó un centro social que lleva su nombre.
+    CORRECTO: En Santander hay un centro social que lleva su nombre.
+G53: Evita conectores y nexos complejos entre frases.
+    - Por ejemplo:
+    INCORRECTO: Luis sabía la respuesta. Sin embargo, se quedó callado.
+    CORRECTO: Luis sabía la respuesta, pero se quedó callado.
+</GUIDELINES>

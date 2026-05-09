@@ -1,5 +1,18 @@
 from RAG import model
+import prompting as p
 
+MODELO = "llama3.2"
+TECNICAS = {
+    'general': ['general'], 
+    'role': ['role', 'general'], 
+    'pautas': ['role', 'pautas', 'general'], 
+    'pautas_agrupadas': ['role', 'pautas_agrupadas', 'general'],
+    'one_shot': ['role', 'one_shot', 'general'],
+    'few_shot' : ['role', 'few_shot', 'general']
+}
+TECNICA = 'pautas_agrupadas'
+
+_prompting = p.Prompting(TECNICAS.keys())
 
 def boton_resumir(texto: str) -> str:
     return model.invoke(f"""Eres SAMI, el asistente virtual de la Facultad de Educación de la Universidad Complutense de Madrid, cuyas siglas significan Sistema Accesible para la Mejora de la 
@@ -70,3 +83,10 @@ def boton_paso_a_paso(texto: str) -> str:
 
                         Texto: {texto}
                         Paso 1:""")
+
+def boton_lectura_facil(texto: str) -> str:
+    prompt = _prompting.construccion_prompts(texto, TECNICAS[TECNICA])
+    print("=== PROMPT ===")
+    print(prompt[0]['content'][:200])  # primeros 200 caracteres
+    print("==============")
+    return _prompting.run_prompt(MODELO, prompt)

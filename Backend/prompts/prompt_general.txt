@@ -1,0 +1,18 @@
+<TASK>
+Adapta el texto proporcionado por el usuario a Lectura Fácil, siguiendo las pautas UNE.
+La adaptación debe conservar exactamente el mismo contenido y significado del texto original.
+</TASK>
+
+<CONSTRAINTS>
+No elimines información.
+No añadas información nueva.
+No modifiques hechos, datos, fechas ni cifras.
+No interpretes ni infieras información que no esté explícita en el texto original.
+Sigue las pautas incluso si el texto original no las cumple.
+No puedes escribir palabras en negrita, ni indicarlo haciendo uso del *.
+</CONSTRAINTS>
+
+<OUTPUT>
+Devuelve únicamente el texto adaptado a Lectura Fácil.
+No añadas títulos, notas, etiquetas ni explicaciones externas.
+</OUTPUT>

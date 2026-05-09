@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from RAG import pregunta_a_RAG, crear_RAG
-from Botones import boton_resumir, boton_reformular, boton_paso_a_paso
+from Botones import boton_resumir, boton_reformular, boton_paso_a_paso, boton_lectura_facil
 from persistence import init_db, log_conversation, get_history, get_global_faqs, get_personal_faqs
 
 @asynccontextmanager
@@ -73,6 +73,11 @@ async def reformular(data: Texto):
 @app.post("/paso-a-paso")
 async def paso_a_paso(data: Texto):
     respuesta = boton_paso_a_paso(data.texto)
+    return Respuesta(respuesta=respuesta)
+
+@app.post("/lectura-facil")
+async def lectura_facil(data: Texto):
+    respuesta = boton_lectura_facil(data.texto)
     return Respuesta(respuesta=respuesta)
 
 @app.get("/faqs")

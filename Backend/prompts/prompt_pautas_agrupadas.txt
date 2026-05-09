@@ -1,0 +1,69 @@
+<GUIDELINES>
+Las siguientes pautas están agrupadas por temática.
+Debes cumplirlas al adaptar el texto a Lectura Fácil.
+
+<LEXICON>
+G01: Utiliza palabras sencillas y habituales. Evita palabras abstractas, muy largas o con sílabas difíciles. 
+G02: Evita frases hechas, refranes, ironías y metáforas.
+G03: Si es necesario utilizar términos técnicos, abstractos o difíciles de entender (porque no hay alternativa sencilla) utiliza glosas y glosarios para explicarlas. El glosario debe explicar el significado de cada término con palabras sencillas.
+G04: Si usas palabras con varios significados o que suenen igual que otra palabra, asegúrate de que el contexto las explique o añade una aclaración. 
+G05: Evita los adverbios que terminan en -mente.
+G06: Se deben evitar los superlativos (-ísimo).
+G07: Evita el uso de palabras que provienen de otros idiomas a menos que su uso sea muy común y no exista una alternativa clara en español.
+G08: Evita las abreviaturas.
+G09: Evita las siglas. Se pueden utilizar siglas muy conocidas, pero en este caso tienes que explicarlas la primera vez que se utilicen. 
+G10: Utiliza la misma palabra para denominar al mismo objeto o referente en todo el documento.
+G11: Evita las palabras que tienen un significado indeterminado.
+G12: Escribe los números en cifras. No los escribas en letra.
+G13: Evita los números con muchos dígitos. Para cantidades muy grandes usa comparaciones sencillas o cualitativas relacionando el número con algo familiar para el lector o sustitúyelos por términos aproximados.
+G14: Evita los números ordinales, tanto en cifra como en letra.
+G15: Evita las fracciones y los porcentajes.
+G16: Evita los números romanos. En el caso de siglos, reyes y papas se debe poner el número romano e indicar cómo se lee.
+G17: Separa los números de teléfono en bloques de dígitos más pequeños.
+G18: Escribe las fechas completas usando el nombre del mes en lugar del número.
+G19: Evita escribir las horas en formato de 24 horas. Utiliza el formato de 12 horas y especifica si es "de la mañana", "de la tarde" o "de la noche".
+</LEXICON>
+
+<PUNCTUATION>
+G20: Evita escribir palabras o frases enteras en mayúsculas. La única excepción son los acrónimos.  
+G21: Utiliza los dos puntos delante de una lista con más de tres elementos.
+G22: Evita signos de puntuación raros o poco habituales que interrumpan el flujo del texto (paréntesis, comillas, corchetes, /, &).
+G23: Evita usar el punto y coma (;).
+G24: Evita usar puntos suspensivos (...).
+G25: Para utilizar un lenguaje inclusivo y claro, repite el nombre y el adjetivo en masculino y femenino o usa genéricos frecuentes que incluyen a hombres y mujeres. Evita la @ y la X para incluir ambos géneros.
+</PUNCTUATION>
+
+<SENTENCES>
+G26: Evita la palabra etcétera. Puedes utilizar otras palabras.
+G27: Utiliza frases sencillas y cortas.
+G28: Escribe una idea por frase. Si tienes que usar frases largas, corta la frase donde las personas se pararían a leerla.
+G29: Cuidado con las órdenes. Asegúrate de que está claro a quién se dirigen.
+G30: Deja claro sobre quién escribes. Utiliza palabras como tú, yo, ellos o el nombre propio.
+G31: Utiliza verbos simples.
+G32: Evita la voz pasiva.
+G33: Evita los gerundios.
+G34: Evita usar dos o más verbos seguidos, excepto perífrasis con verbos modales sencillos (deber, querer, saber y poder).
+G35: Usa frases positivas y evita las frases negativas.
+G36: Evita dos frases negativas juntas.
+G37: Evita las explicaciones entre comas, guiones o paréntesis.
+G38: Evita utilizar elipsis u omisiones de palabras clave (sustantivos o verbos).
+G46: Evita los condicionales.
+G47: Evita los subjuntivos.
+G48: Evita los tiempos verbales compuestos.
+G49: Evita usar el verbo en su forma de sustantivo.
+G50: Evita las frases nominales.
+G51: Evita usar un adjetivo solo para referirte a un objeto.
+G52: Utiliza el presente de indicativo siempre que sea posible.
+G53: Evita conectores y nexos complejos entre frases.
+</SENTENCES>
+
+<TEXT_STRUCTURE>
+G39: Evita poner más información de la necesaria.
+G40: Organiza la información en el tiempo. Explica primero lo que sucede al principio y sigue la historia en orden.
+G41: Dirige el texto directamente al lector utilizando la segunda persona (singular o plural) siempre que la frase requiera o describa una acción que el lector deba realizar.
+G42: Pon junta la información sobre el mismo tema. Organiza los temas con espacios en blanco entre frases.
+G43: Organiza las listas con viñetas.
+G44: Escribe los diálogos en estilo teatral, es decir, con un guion.
+G45: Utiliza ejemplos para explicar las palabras difíciles.
+</TEXT_STRUCTURE>
+</GUIDELINES>
