@@ -1,7 +1,7 @@
 from RAG import model
 import prompting as p
 
-MODELO = "llama3.2"
+MODELO = "gemma3:4b"
 TECNICAS = {
     'general': ['general'], 
     'role': ['role', 'general'], 
@@ -10,7 +10,7 @@ TECNICAS = {
     'one_shot': ['role', 'one_shot', 'general'],
     'few_shot' : ['role', 'few_shot', 'general']
 }
-TECNICA = 'pautas_agrupadas'
+TECNICA = 'pautas'
 
 _prompting = p.Prompting(TECNICAS.keys())
 
@@ -86,7 +86,4 @@ def boton_paso_a_paso(texto: str) -> str:
 
 def boton_lectura_facil(texto: str) -> str:
     prompt = _prompting.construccion_prompts(texto, TECNICAS[TECNICA])
-    print("=== PROMPT ===")
-    print(prompt[0]['content'][:200])  # primeros 200 caracteres
-    print("==============")
     return _prompting.run_prompt(MODELO, prompt)
