@@ -8,5 +8,8 @@ export const useAccessibilityStore = create((set) => ({
     setFontSize: (size) => set({ fontSize: size }),
     toggleContrast: () => set((state) => ({ highContrast: !state.highContrast })),
     togglePanel: () => set((state) => ({ isPanelOpen: !state.isPanelOpen })),
-    setTema: (tema) => set({ tema }),
+    setTema: (tema) => {
+        document.documentElement.setAttribute('data-theme', tema);
+        set({ tema });
+    },
 }));

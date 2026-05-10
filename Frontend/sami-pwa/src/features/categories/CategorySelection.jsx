@@ -7,25 +7,26 @@ const categories = [
         id: 'academico',
         name: 'Académico',
         desc: 'Campus virtual, exámenes',
+        className: 'category-card--1'
 
     },
     {
         id: 'administrativo',
         name: 'Administrativo',
         desc: 'Matrícula, becas y ayudas',
-
+        className: 'category-card--2'
     },
     {
         id: 'biblioteca',
         name: 'Biblioteca',
         desc: 'Préstamos y recursos',
-
+        className: 'category-card--3'
     },
     {
         id: 'servicios',
         name: 'Servicios',
         desc: 'Deportes, eventos, etc.',
-
+        className: 'category-card--4'
     }
 ];
 
@@ -43,7 +44,7 @@ export const CategorySelection = () => {
                 {categories.map((cat) => (
                     <button
                         key={cat.id}
-                        className="category-card"
+                        className={`category-card ${cat.className}`}
                         onClick={() => navigate(`/query/${cat.id}`)}
                         aria-label={`Seleccionar categoría ${cat.name}`}
                     >

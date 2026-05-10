@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAccessibilityStore } from '../store/useAccessibilityStore';
 import './Header.css';
+import logo from '../assets/Sami.png';
 
 export const Header = () => {
     const { togglePanel, fontSize } = useAccessibilityStore();
@@ -20,7 +21,7 @@ export const Header = () => {
                     </button>
                 )}
                 <Link to="/" className="header-logo">
-                    <div className="header-logo-icon">:3</div>
+                    <img src={logo} alt="Logo SAMI" className="header-logo-icon" />
                     <div className="header-logo-text">
                         <span className="header-logo-title">SAMI</span>
                         <span className="header-logo-subtitle">Universidad Complutense de Madrid</span>

@@ -42,8 +42,8 @@
 }
 
 .header-logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     display: flex;
@@ -59,14 +59,14 @@
 }
 
 .header-logo-title {
-    color: white;
+    color: var(--text-header);
     font-weight: 800;
     font-size: 1.1em;
     letter-spacing: 0.5px;
 }
 
 .header-logo-subtitle {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-header-secondary);
     font-size: 0.7em;
     font-weight: 400;
     letter-spacing: 0.3px;
@@ -74,9 +74,8 @@
 
 .settings-button {
     background: rgba(255, 255, 255, 0.15);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
+    color: var(--text-header);
+    border: 1px solid var(--text-header-secondary);
     height: 40px;
     padding: 0 16px;
     cursor: pointer;
