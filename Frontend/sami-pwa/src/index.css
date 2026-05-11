@@ -18,7 +18,7 @@
     --card-1-shadow: rgba(21, 101, 192, 0.28);
 
     --card-2-bg: #e8f7d9;
-    --card-2-border: #7fc44f;
+    --card-2-border: #67A23E;
     --card-2-hover: #558B2F;
     --card-2-shadow: rgba(85, 139, 47, 0.28);
 
@@ -28,7 +28,7 @@
     --card-3-shadow: rgba(239, 108, 0, 0.28);
 
     --card-4-bg: #f0ddff;
-    --card-4-border: #b96be0;
+    --card-4-border: #9452B5;
     --card-4-hover: #6A1B9A;
     --card-4-shadow: rgba(106, 27, 154, 0.28);
 }
@@ -47,17 +47,17 @@
     --size-selector-bg: #e3edf7;
 
     --card-1-bg: #dff5e3;
-    --card-1-border: #66bb6a;
+    --card-1-border: #67A23E;
     --card-1-hover: #2E7D32;
     --card-1-shadow: rgba(46, 125, 50, 0.28);
 
     --card-2-bg: #ffe6cc;
-    --card-2-border: #ff9f43;
+    --card-2-border: #ffad42;
     --card-2-hover: #E65100;
     --card-2-shadow: rgba(230, 81, 0, 0.28);
 
     --card-3-bg: #efdfff;
-    --card-3-border: #ba68c8;
+    --card-3-border: #9452B5;
     --card-3-hover: #6A1B9A;
     --card-3-shadow: rgba(106, 27, 154, 0.28);
 
@@ -81,7 +81,7 @@
     --size-selector-bg: #e0f0e3;
 
     --card-1-bg: #dcefff;
-    --card-1-border: #64b5f6;
+    --card-1-border: #5aa9f5;
     --card-1-hover: #1565C0;
     --card-1-shadow: rgba(21, 101, 192, 0.28);
 
@@ -91,12 +91,12 @@
     --card-2-shadow: rgba(173, 20, 87, 0.28);
 
     --card-3-bg: #ffe7cc;
-    --card-3-border: #ffb74d;
+    --card-3-border: #ffad42;
     --card-3-hover: #E65100;
     --card-3-shadow: rgba(230, 81, 0, 0.28);
 
     --card-4-bg: #f1ddff;
-    --card-4-border: #ba68c8;
+    --card-4-border: #9452B5;
     --card-4-hover: #6A1B9A;
     --card-4-shadow: rgba(106, 27, 154, 0.28);
 }
@@ -115,17 +115,17 @@
     --size-selector-bg: #ede3f7;
 
     --card-1-bg: #dcefff;
-    --card-1-border: #64b5f6;
+    --card-1-border: #5aa9f5;
     --card-1-hover: #1565C0;
     --card-1-shadow: rgba(21, 101, 192, 0.28);
 
     --card-2-bg: #dff5e3;
-    --card-2-border: #66bb6a;
+    --card-2-border: #67A23E;
     --card-2-hover: #2E7D32;
     --card-2-shadow: rgba(46, 125, 50, 0.28);
 
     --card-3-bg: #ffe7cc;
-    --card-3-border: #ffb74d;
+    --card-3-border: #ffad42;
     --card-3-hover: #E65100;
     --card-3-shadow: rgba(230, 81, 0, 0.28);
 
