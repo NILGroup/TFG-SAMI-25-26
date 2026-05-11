@@ -19,7 +19,7 @@
 .back-button {
     background: rgba(255, 255, 255, 0.15);
     border: none;
-    color: white;
+    color: var(--bg-primary);
     cursor: pointer;
     width: 36px;
     height: 36px;
