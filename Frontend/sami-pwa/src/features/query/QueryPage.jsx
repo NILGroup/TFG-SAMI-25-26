@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAccessibilityStore } from '../../store/useAccessibilityStore';
-import { preguntarAlRAG, getFaqs, getHistorial, resumirRespuesta, reformularRespuesta, pasoAPasoRespuesta } from '../../services/api';
+import { preguntarAlRAG, getFaqs, getHistorial, resumirRespuesta, reformularRespuesta, pasoAPasoRespuesta, lecturaFacilRespuesta } from '../../services/api';
 import './QueryPage.css';
 
 export const QueryPage = () => {
@@ -55,6 +55,7 @@ export const QueryPage = () => {
             if (tipo === 'resumir') nuevaRespuesta = await resumirRespuesta(answer);
             if (tipo === 'reformular') nuevaRespuesta = await reformularRespuesta(answer);
             if (tipo === 'pasos') nuevaRespuesta = await pasoAPasoRespuesta(answer);
+            if (tipo === 'lectura-facil') nuevaRespuesta = await lecturaFacilRespuesta(answer);
             setAnswer(nuevaRespuesta);
         } catch (e) {
             setError('No se pudo transformar la respuesta.');
@@ -153,7 +154,7 @@ export const QueryPage = () => {
                     {error && <p style={{ color: 'red', marginTop: '12px' }}>{error}</p>}
                     <footer className="response-actions">
                         <button className="action-btn" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta</button>
-                        <button className="action-btn">Lectura Fácil</button>
+                        <button className="action-btn" onClick={() => handleTransformar('lectura-facil')} disabled={isTransforming}>Lectura Fácil</button>
                         <button className="action-btn" onClick={() => handleTransformar('resumir')} disabled={isTransforming}>Respuesta más corta</button>
                         <button className="action-btn" onClick={() => handleTransformar('pasos')} disabled={isTransforming}>Respuesta por pasos</button>
                         <button className="action-btn" onClick={() => handleTransformar('reformular')} disabled={isTransforming}>Reformular respuesta</button>

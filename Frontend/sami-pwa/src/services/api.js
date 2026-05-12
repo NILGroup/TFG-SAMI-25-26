@@ -53,6 +53,17 @@ export const pasoAPasoRespuesta = async (texto) => {
     return data.respuesta;
 };
 
+export const lecturaFacilRespuesta = async (texto) => {
+    const response = await fetch(`${API_URL}/lectura-facil`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ texto })
+    });
+    if (!response.ok) throw new Error('Error al aplicar lectura fácil');
+    const data = await response.json();
+    return data.respuesta;
+};
+
 export const getFaqs = async (categoryId) => {
     const response = await fetch(`${API_URL}/faqs?user_id=${getUserId()}&category=${categoryId}`);
     if (!response.ok) throw new Error('Error al obtener FAQs');
