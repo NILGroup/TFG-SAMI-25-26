@@ -58,6 +58,14 @@
     border-radius: 12px;
     background: var(--bg-secondary);
     color: var(--text-primary);
+    resize: none;
+    overflow: hidden;
+    line-height: 1.5;
+    min-height: 58px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .main-input:focus {

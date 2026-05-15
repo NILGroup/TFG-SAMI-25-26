@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAccessibilityStore } from '../../store/useAccessibilityStore';
 import { preguntarAlRAG, getFaqs, getHistorial, resumirRespuesta, reformularRespuesta, pasoAPasoRespuesta, lecturaFacilRespuesta } from '../../services/api';
 import './QueryPage.css';
@@ -27,6 +27,17 @@ export const QueryPage = () => {
             .then(setHistorial)
             .catch(() => { });
     }, [categoryId]);
+
+    const textareaRef = useRef(null);
+
+    const handleInputChange = (e) => {
+        setQuestion(e.target.value);
+        const el = textareaRef.current;
+        if (el) {
+            el.style.height = 'auto';
+            el.style.height = `${el.scrollHeight}px`;
+        }
+    };
 
     const handleSearch = async (text) => {
         const query = text || question;
@@ -126,12 +137,19 @@ export const QueryPage = () => {
                         )}
 
                         <div className="input-group">
-                            <input
+                            <textarea
+                                ref={textareaRef}
                                 className="main-input"
                                 value={question}
-                                onChange={(e) => setQuestion(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                                onChange={handleInputChange}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey) {
+                                        e.preventDefault();
+                                        handleSearch();
+                                    }
+                                }}
                                 placeholder="Escribe aquí tu pregunta..."
+                                rows={1}
                             />
                             <button
                                 className="search-confirm-btn"
