@@ -1,7 +1,7 @@
 .categories-page-wrapper {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 60px 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
@@ -11,31 +11,31 @@
 .categories-page-wrapper h2 {
     color: var(--text-primary);
     font-weight: 700;
-    margin-bottom: 40px;
-    font-size: 1.5em;
+    margin-bottom: 50px;
+    font-size: 2em;
     text-align: center;
 }
 
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 280px));
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
     width: 100%;
+    max-width: 860px;
     justify-content: center;
 }
 
-/* BASE CARD */
 .category-card {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 1.5em;
+    padding: 2.5em 2em;
     width: 100%;
-    min-height: 5em;
+    min-height: 8em;
     box-sizing: border-box;
 
-    border-radius: 16px;
+    border-radius: 20px;
     border-width: 2px;
     border-style: solid;
 
@@ -124,13 +124,13 @@
 .category-info h3 {
     margin: 0;
     color: var(--text-primary);
-    font-size: 1.25em;
+    font-size: 1.5em;
 }
 
 .category-info p {
     margin: 0;
     color: var(--text-secondary);
-    font-size: 0.95em;
+    font-size: 1.05em;
     line-height: 1.4;
 }
 
