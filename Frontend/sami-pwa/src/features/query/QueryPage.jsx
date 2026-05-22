@@ -170,13 +170,17 @@ export const QueryPage = () => {
                         <p>{answer}</p>
                     </div>
                     {error && <p style={{ color: 'red', marginTop: '12px' }}>{error}</p>}
-                    <footer className="response-actions">
-                        <button className="action-btn" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta</button>
-                        <button className="action-btn" onClick={() => handleTransformar('lectura-facil')} disabled={isTransforming}>Lectura Fácil</button>
-                        <button className="action-btn" onClick={() => handleTransformar('resumir')} disabled={isTransforming}>Respuesta más corta</button>
-                        <button className="action-btn" onClick={() => handleTransformar('pasos')} disabled={isTransforming}>Respuesta por pasos</button>
-                        <button className="action-btn" onClick={() => handleTransformar('reformular')} disabled={isTransforming}>Reformular respuesta</button>
-                        <button className="action-btn" onClick={() => navigate('/')}>Volver al inicio</button>
+                    <footer>
+                        <div className="response-actions">
+                            <button className="action-btn" onClick={() => handleTransformar('lectura-facil')} disabled={isTransforming}>Lectura Fácil</button>
+                            <button className="action-btn" onClick={() => handleTransformar('resumir')} disabled={isTransforming}>Respuesta más corta</button>
+                            <button className="action-btn" onClick={() => handleTransformar('pasos')} disabled={isTransforming}>Respuesta por pasos</button>
+                            <button className="action-btn" onClick={() => handleTransformar('reformular')} disabled={isTransforming}>Reformular respuesta</button>
+                        </div>
+                        <div className="navigation-actions">
+                            <button className="nav-btn nav-btn--secondary" onClick={() => navigate('/')}>← Volver al inicio</button>
+                            <button className="nav-btn nav-btn--primary" onClick={() => { setIsSubmitted(false); setQuestion(''); }}>Nueva consulta →</button>
+                        </div>
                     </footer>
                 </div>
             )}
