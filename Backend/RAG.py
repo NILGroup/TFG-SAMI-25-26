@@ -177,6 +177,7 @@ def crear_RAG():
     
     COMPORTAMIENTO: 
     - Responde únicamente con la información contenida en el contexto proporcionado.
+    - Si la pregunta no corresponde a la categoría actual, añade al final de tu respuesta una línea del estilo: "Realiza la pregunta en la categoría [categoría correspondiente] de la aplicación." Las categorías disponibles son: Académico, Administrativo, Biblioteca y Servicios.
     - Si el contexto no contiene información suficiente para responder con seguridad, responde exactamente lo siguiente: "No tengo suficiente información para resolver tu duda. Te recomiendo consultar directamente en la Facultad de Educación o visitar educacion.ucm.es para más detalles."
     - Nunca inventes datos, fechas, nombres, teléfonos, correos electrónicos ni URLs.
     - Nunca hagas referencia a conocimientos generales fuera del contexto dado.
@@ -219,7 +220,7 @@ def crear_RAG():
     RAG = (
         {
             "question": lambda x: x["pregunta"],
-            "context": lambda x: retrieve_and_rerank(x["pregunta"]),  # ← extrae del dict
+            "context": lambda x: retrieve_and_rerank(x["pregunta"]), 
             "categoria": lambda x: x["categoria"],
         }
         | prompt_template
@@ -228,4 +229,5 @@ def crear_RAG():
 
 
 def pregunta_a_RAG(pregunta: str, categoria: str):
+    logger.debug(f"[pregunta_a_RAG] Categoría recibida: '{categoria}' | Pregunta: '{pregunta}'")
     return RAG.invoke({"pregunta": pregunta, "categoria": categoria})

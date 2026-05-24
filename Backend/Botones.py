@@ -1,7 +1,7 @@
 from RAG import model
 import prompting as p
 
-MODELO = "gemma3:4b"
+MODELO = "ministral-3:8b"
 TECNICAS = {
     'general': ['general'], 
     'role': ['role', 'general'], 
