@@ -10,11 +10,11 @@ import chromadb
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 CSV_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Scrapping", "resultados_preprocesados.csv"))
 DB_PATH = os.path.normpath(os.path.join(BASE_DIR, "Data", "Chroma", "chroma_db"))
-EMBED_MODEL = "paraphrase-multilingual-mpnet-base-v2"
+EMBED_MODEL = "intfloat/multilingual-e5-large"
 COLLECTION = "TFG_SAMI"
 
-CHUNK_SIZE = 512
-CHUNK_OVERLAP = 82
+CHUNK_SIZE = 1024
+CHUNK_OVERLAP = 200
 
 def crear_DB(csv_path : str = CSV_PATH):
     if not os.path.exists(csv_path):
@@ -37,14 +37,6 @@ def crear_DB(csv_path : str = CSV_PATH):
             h2s = row.get("h2s", "").strip()
             url = row.get("url", "").strip()
 
-            # TITULOS_GENERICOS = {
-            #     "Facultad de Educación - Centro de Formación del Profesorado.",
-            # }
-            # if titulo and titulo not in TITULOS_GENERICOS:
-            #     texto_principal = f"{titulo}. {texto_principal}"
-            # elif h2s and len(h2s.split()) <= 5:
-            #     texto_principal = f"{h2s}. {texto_principal}"
-
             partes = []
             if titulo:
                 partes.append(f"Titulo: {titulo}")
@@ -52,6 +44,10 @@ def crear_DB(csv_path : str = CSV_PATH):
                 partes.append(f"H1: {h1}")
             if h2s:
                 partes.append(f"H2s: {h2s}")
+            # Añadir contexto repetido al inicio del texto para mejorar retrieval
+            contexto = " | ".join(filter(None, [titulo, h1, h2s]))
+            if contexto:
+                partes.append(f"Contexto: {contexto}")
             partes.append(texto_principal)
 
             documents.append(Document(

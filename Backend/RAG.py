@@ -22,7 +22,7 @@ logger.add("logs/rag.log", rotation="10 MB", retention="7 days", level="DEBUG",
 RAG = None
 reranker = None
 #usar el modelo que quieras de Ollama, mirar cuales tienes instalado: ollama list, descargar nuevo ollama pull qwen3.5
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(model="ministral-3:8b")
 
 def generar_queries(pregunta: str):
     logger.debug(f"Generando queries adicionales para: '{pregunta}'")
@@ -101,16 +101,6 @@ def crear_RAG():
     def retrieve_and_rerank(pregunta: str):
         logger.debug(f"[Retrieve & Rerank] Pregunta recibida: '{pregunta}'")
         t_total = time.time()
-
-        #Hybrid retrieval: vectorial + BM25
-        # t_retrieval = time.time()
-        # vector_docs = retriever.invoke(pregunta)
-        # bm25_results = bm25_retriever.invoke(pregunta)
-        # docs = vector_docs + bm25_results
-        # logger.debug(
-        #    f"Docs recuperados — vectorial: {len(vector_docs)}, BM25: {len(bm25_results)} "
-        #    f"— {time.time() - t_retrieval:.2f}s"
-        # )
 
         queries = generar_queries(pregunta)
 
@@ -210,6 +200,9 @@ def crear_RAG():
 
     USER_TEMPLATE = """
     
+    Categoría:
+    {categoria}
+
     Contexto:
     {context}
 
@@ -225,13 +218,14 @@ def crear_RAG():
 
     RAG = (
         {
-            "question": lambda x: str(x),
-            "context": retrieve_and_rerank
+            "question": lambda x: x["pregunta"],
+            "context": lambda x: retrieve_and_rerank(x["pregunta"]),  # ← extrae del dict
+            "categoria": lambda x: x["categoria"],
         }
         | prompt_template
         | model
     )
 
 
-def pregunta_a_RAG(pregunta: str):
-    return RAG.invoke(pregunta)
+def pregunta_a_RAG(pregunta: str, categoria: str):
+    return RAG.invoke({"pregunta": pregunta, "categoria": categoria})

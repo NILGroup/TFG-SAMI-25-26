@@ -56,7 +56,7 @@ def saludo():
 
 @app.post("/pregunta")
 async def preguntar(data: Pregunta):
-    respuesta = pregunta_a_RAG(data.pregunta)
+    respuesta = pregunta_a_RAG(data.pregunta, data.category)
     log_conversation(data.user_id, data.category, data.pregunta, respuesta)
     return Respuesta(respuesta=respuesta)
     
