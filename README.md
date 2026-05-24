@@ -68,7 +68,7 @@ SAMI está dirigido principalmente al alumnado del programa **ACCEDE** de la UCM
 
 ---
 
-## Contribuidores
+## 👥 Contribuidores
 <a href="https://github.com/NILGroup/TFG-SAMI-25-26/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=NILGroup/TFG-SAMI-25-26" />
 </a>
