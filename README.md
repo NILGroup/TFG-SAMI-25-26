@@ -18,7 +18,7 @@
 
 ---
 
-## ⬇️ Instalación y configuración
+## Instalación y configuración
 Instrucciones para configurar el entorno del proyecto:
 
 - Clonar el repositorio:
@@ -34,14 +34,14 @@ venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
 
-### 🤔 ¿Qué es SAMI?
+### ¿Qué es SAMI?
 **SAMI** *(Sistema Asistente para la Mejora a la Inclusión)* es un asistente conversacional basado en inteligencia artificial desarrollado como Trabajo de Fin de Grado para la Facultad de Educación de la Universidad Complutense de Madrid. Utiliza una arquitectura **RAG** *(Retrieval-Augmented Generation)* para responder preguntas sobre la facultad con información actualizada y verificable, poniendo especial énfasis en la **accesibilidad cognitiva** para usuarios con discapacidad intelectual.
 
-### ✅ Problema que Resuelve
+### Problema que Resuelve
 El programa **ACCEDE** de la UCM (título propio para la formación de Técnicos Auxiliares en Evaluación de Entornos Inclusivos) identificó una dificultad persistente en su alumnado: comprender la estructura organizativa, los procedimientos administrativos y el funcionamiento cotidiano de la Facultad de Educación. La información relevante se encuentra dispersa en múltiples páginas y documentos con un lenguaje excesivamente técnico, lo que supone una barrera especialmente significativa para estudiantes con discapacidad intelectual.
 
 
-### 🛠️ Solución
+### Solución
 SAMI permite a los usuarios:
 - Realizar preguntas en lenguaje natural sobre la Facultad de Educación de la UCM.
 - Obtener respuestas claras y accesibles, adaptadas a los principios de **Lectura Fácil**.
@@ -49,26 +49,26 @@ SAMI permite a los usuarios:
 - Consultar información fundamentada en documentación oficial extraída directamente del sitio web de la facultad.
 - Recuperar el historial de conversación entre sesiones gracias a una memoria conversacional persistente.
 
-### 🎯 Público Objetivo
+### Público Objetivo
 SAMI está dirigido principalmente al alumnado del programa **ACCEDE** de la UCM, así como a cualquier estudiante, docente o miembro del personal que necesite orientación sobre la Facultad de Educación. El sistema presta especial atención a personas con **discapacidad intelectual**, con el objetivo de fomentar su autonomía dentro del entorno universitario.
 
 ---
 
-## ✨ Características Principales
+## Características Principales
 
-- **🔍 RAG con Multi-Query Retrieval y Reranking**: Genera múltiples reformulaciones de cada consulta para ampliar la cobertura de búsqueda y reordena los resultados con un modelo CrossEncoder, seleccionando únicamente los fragmentos más relevantes para construir el contexto del LLM.
+- **RAG con Multi-Query Retrieval y Reranking**: Genera múltiples reformulaciones de cada consulta para ampliar la cobertura de búsqueda y reordena los resultados con un modelo CrossEncoder, seleccionando únicamente los fragmentos más relevantes para construir el contexto del LLM.
 
-- **📱 Interfaz PWA accesible**: Implementada en React + Vite, separa la formulación de preguntas y la visualización de respuestas en pantallas independientes para reducir la carga cognitiva, con soporte para temas de color, alto contraste y ajuste de tamaño de texto.
+- **Interfaz PWA accesible**: Implementada en React + Vite, separa la formulación de preguntas y la visualización de respuestas en pantallas independientes para reducir la carga cognitiva, con soporte para temas de color, alto contraste y ajuste de tamaño de texto.
 
-- **🔄 Adaptación dinámica de respuestas**: El usuario puede transformar cualquier respuesta sin reformular la consulta mediante botones de **Lectura Fácil**, **Paso a paso**, **Reformular** y **Resumir**, cada uno basado en distintas técnicas de prompt engineering.
+- **Adaptación dinámica de respuestas**: El usuario puede transformar cualquier respuesta sin reformular la consulta mediante botones de **Lectura Fácil**, **Paso a paso**, **Reformular** y **Resumir**, cada uno basado en distintas técnicas de prompt engineering.
 
-- **🗂️ Categorías temáticas**: Las consultas se organizan en cuatro áreas —Académico, Biblioteca, Administrativo y Servicios— que actúan como contexto adicional para el RAG y facilitan la navegación mediante un código de colores accesible.
+- **Categorías temáticas**: Las consultas se organizan en cuatro áreas —Académico, Biblioteca, Administrativo y Servicios— que actúan como contexto adicional para el RAG y facilitan la navegación mediante un código de colores accesible.
 
-- **🕸️ Pipeline ETL propio**: Construcción automatizada de la base de conocimiento a partir del sitio web oficial de la Facultad de Educación mediante crawling, scraping, preprocesamiento y vectorización en ChromaDB.
+- **Pipeline ETL propio**: Construcción automatizada de la base de conocimiento a partir del sitio web oficial de la Facultad de Educación mediante crawling, scraping, preprocesamiento y vectorización en ChromaDB.
 
 ---
 
-## 👥 Contribuidores
+## Contribuidores
 <a href="https://github.com/NILGroup/TFG-SAMI-25-26/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=NILGroup/TFG-SAMI-25-26" />
 </a>
